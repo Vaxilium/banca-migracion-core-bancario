@@ -1,0 +1,67 @@
+# Evaluacion ponderada de estrategias de migracion.
+# Los puntajes y pesos son configuracion editable; la tabla publicada se genera
+# automaticamente con `make informes` a partir de este archivo.
+
+criterios:
+  - id: riesgo_operacional
+    nombre: Riesgo operacional
+    peso: 0.20
+  - id: costo_total
+    nombre: Costo total
+    peso: 0.15
+  - id: tiempo_hasta_valor
+    nombre: Tiempo hasta el valor
+    peso: 0.10
+  - id: complejidad_conciliacion
+    nombre: Complejidad de conciliacion
+    peso: 0.15
+  - id: interdependencia_productos
+    nombre: Interdependencia entre productos
+    peso: 0.15
+  - id: impacto_cliente
+    nombre: Impacto en el cliente
+    peso: 0.15
+  - id: capacidad_equipo
+    nombre: Capacidad del equipo
+    peso: 0.10
+
+opciones:
+  - id: big_bang
+    nombre: Big bang (corte unico de fin de semana)
+    puntajes:
+      riesgo_operacional: 2
+      costo_total: 4
+      tiempo_hasta_valor: 5
+      complejidad_conciliacion: 2.5
+      interdependencia_productos: 5
+      impacto_cliente: 3
+      capacidad_equipo: 4.5
+    justificacion: >-
+      Un unico corte elimina las conciliaciones cruzadas entre legado y nuevo core.
+      El riesgo se compensa con tres ensayos, paralelo de saldos y plan de reversa.
+  - id: por_olas
+    nombre: Por olas (migracion gradual por producto o segmento)
+    puntajes:
+      riesgo_operacional: 4
+      costo_total: 2.5
+      tiempo_hasta_valor: 2.5
+      complejidad_conciliacion: 4
+      interdependencia_productos: 2
+      impacto_cliente: 4
+      capacidad_equipo: 3
+    justificacion: >-
+      Menor riesgo por ola, pero obliga a doble operacion y conciliaciones cruzadas
+      entre productos que se referencian entre si durante meses.
+  - id: paralelo
+    nombre: Paralelo (operacion simultanea de ambos cores)
+    puntajes:
+      riesgo_operacional: 5
+      costo_total: 1
+      tiempo_hasta_valor: 2
+      complejidad_conciliacion: 4.5
+      interdependencia_productos: 2
+      impacto_cliente: 4.5
+      capacidad_equipo: 2
+    justificacion: >-
+      Maxima seguridad teorica, pero el costo de duplicar infraestructura,
+      licencias y equipos durante meses lo vuelve inviable para la escala del banco.

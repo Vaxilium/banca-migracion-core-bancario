@@ -1,0 +1,21 @@
+# Entorno virtual y cachés de herramientas
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Datos generados (grandes, reproducibles con `make todo`)
+datos/
+*.duckdb
+*.duckdb.wal
+*.parquet
+
+# Sitio generado por MkDocs
+site/
+
+# Progreso local de trabajo
+.progreso.md
+
+# Evidencias y reportes temporales
+junit*.xml
