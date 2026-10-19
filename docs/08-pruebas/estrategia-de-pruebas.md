@@ -90,12 +90,12 @@ escenario sin implementación o una prueba cita un escenario inexistente.
 <!-- INICIO AUTO: pruebas-resumen -->
 | Modulo | Pruebas | Pasadas | Fallidas | Omitidas | Duracion (s) |
 |---|---:|---:|---:|---:|---:|
-| Conciliacion | 5 | 5 | 0 | 0 | 0.43 |
+| Conciliacion | 5 | 5 | 0 | 0 | 0.44 |
 | Especificaciones Gherkin | 3 | 3 | 0 | 0 | 0.00 |
 | Generacion determinista | 3 | 3 | 0 | 0 | 0.03 |
-| Migracion y carga | 9 | 8 | 0 | 1 | 1.62 |
-| Reglas de transformacion | 11 | 11 | 0 | 0 | 0.16 |
-| **Total** | **31** | **30** | **0** | **1** | **2.24** |
+| Migracion y carga | 9 | 9 | 0 | 0 | 1.63 |
+| Reglas de transformacion | 11 | 11 | 0 | 0 | 0.12 |
+| **Total** | **31** | **31** | **0** | **0** | **2.22** |
 <!-- FIN AUTO: pruebas-resumen -->
 
 La prueba de muestras queda omitida mientras no se generen los archivos publicables

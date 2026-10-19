@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero de migracion - Banco Meridiano Austral</title>
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Segoe UI", Roboto, Arial, sans-serif; background: #f8fafc; color: #0f172a; }
+header { background: linear-gradient(120deg, #0f766e, #134e4a); color: white; padding: 32px 40px; }
+header h1 { margin: 0 0 6px; font-size: 30px; }
+header p { margin: 0; opacity: .9; }
+main { max-width: 1240px; margin: 0 auto; padding: 28px 24px 48px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 26px; }
+.kpi { background: white; border: 1px solid #e2e8f0; border-left: 5px solid #0f766e; border-radius: 10px; padding: 16px; box-shadow: 0 1px 2px rgba(15,23,42,.05); }
+.kpi-valor { font-size: 26px; font-weight: 700; color: #0f172a; }
+.kpi-etiqueta { font-size: 13px; font-weight: 600; color: #334155; margin-top: 4px; }
+.kpi-detalle { font-size: 12px; color: #64748b; margin-top: 2px; }
+section { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(15,23,42,.05); }
+section h2 { margin: 0 0 12px; font-size: 19px; color: #134e4a; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); gap: 20px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; background: #f1f5f9; color: #334155; padding: 9px; }
+td { padding: 9px; border-top: 1px solid #e2e8f0; vertical-align: top; }
+td.num, th.num { text-align: right; }
+.pill { padding: 3px 9px; border-radius: 999px; font-weight: 700; font-size: 12px; white-space: nowrap; }
+.pill.ok { background: #ccfbf1; color: #115e59; }
+.pill.no { background: #fee2e2; color: #991b1b; }
+.nota { color: #64748b; font-size: 13px; }
+footer { text-align: center; color: #64748b; font-size: 12px; padding: 20px; }
+@media (max-width: 700px) { header { padding: 24px; } .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+<h1>Migracion del core bancario</h1>
+<p>Banco Meridiano Austral (entidad ficticia) - datos sinteticos, semilla 20261019</p>
+</header>
+<main>
+<div class="kpis">{{KPIS}}</div>
+<section>
+<h2>Filas cargadas por ensayo</h2>
+{{FIG_FILAS}}
+<p class="nota">El ensayo 3 incorpora la delta del corte: cuentas nuevas, saldos vigentes y movimientos posteriores a la extraccion.</p>
+</section>
+<div class="grid">
+<section>
+<h2>Rechazos del ensayo 3 por motivo</h2>
+{{FIG_RECHAZOS}}
+</section>
+<section>
+<h2>Descuadres de saldo por ensayo</h2>
+{{FIG_DESCUADRES}}
+</section>
+</div>
+<section>
+<h2>Libro mayor: diferencias por cuenta</h2>
+{{FIG_CONTABLE}}
+<p class="nota">Los ocho desfases se ajustan contra resultados acumulados (3.3.01) con evidencia recalculada; el destino no se reescribe.</p>
+</section>
+<section>
+<h2>Decision go/no-go</h2>
+{{GO_NO_GO}}
+</section>
+<section>
+<h2>Pendientes con dueno antes del corte</h2>
+{{PENDIENTES}}
+<p class="nota">El detalle y los criterios estan en el runbook de corte y en el informe de conciliacion.</p>
+</section>
+</main>
+<footer>Generado por src/tablero/generar_tablero.py a partir de datos/resultados. Todos los importes estan en pesos.</footer>
+</body>
+</html>
