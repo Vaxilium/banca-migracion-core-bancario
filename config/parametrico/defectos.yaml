@@ -1,33 +1,34 @@
 # Tasas de inyeccion de defectos sinteticos por entidad. Cada defecto inyectado
 # queda registrado en datos/verdad/defectos_inyectados.csv (verdad de terreno) para
-# medir la deteccion real del pipeline. Rango objetivo global: 3 % a 6 %.
+# medir la deteccion real del pipeline. Objetivo global: 3 % a 6 % de los registros
+# de la extraccion (la tasa efectiva se publica en docs/04-datos-de-origen).
 
 clientes:
-  duplicado_nombre_variante: 0.015
-  documento_invalido: 0.008
-  documento_repetido_otro_cliente: 0.004
-  fecha_nacimiento_imposible: 0.005
+  duplicado_nombre_variante: 0.03
+  documento_invalido: 0.02
+  documento_repetido_otro_cliente: 0.01
+  fecha_nacimiento_imposible: 0.015
 documentos:
-  vencido_sin_marcar: 0.02
+  vencido_sin_marcar: 0.05
 direcciones:
-  incompleta: 0.03
+  incompleta: 0.06
 cuentas:
-  huerfana: 0.006
-  estado_desconocido: 0.01
-  producto_fuera_alcance: 0.03
-  producto_desconocido: 0.02
+  huerfana: 0.02
+  estado_desconocido: 0.04
+  producto_fuera_alcance: 0.06
+  producto_desconocido: 0.04
 movimientos:
-  signo_invertido: 0.006
-  fecha_imposible: 0.003
-  duplicado_reproceso: 0.005
+  signo_invertido: 0.04
+  fecha_imposible: 0.012
+  duplicado_reproceso: 0.02
 saldos:
-  descuadre_leve: 0.009
-  descuadre_grave: 0.001
+  descuadre_leve: 0.02
+  descuadre_grave: 0.005
 prestamos:
-  saldo_incongruente: 0.01
+  saldo_incongruente: 0.03
 plazos_fijos:
-  vencimiento_incongruente: 0.005
+  vencimiento_incongruente: 0.02
 mandatos:
-  cuenta_inexistente: 0.004
+  cuenta_inexistente: 0.02
 contabilidad:
   filas_con_desfase: 8
