@@ -1,0 +1,34 @@
+# Reglas del ensayo 2: correccion de los defectos detectados en el ensayo 1.
+# El ensayo 1 perdio todas las cuentas de 2026 (umbral de siglo 25 interpretaba el ano
+# 26 como 1926), rechazo cajas juveniles y cuentas internacionales con equivalente
+# valido y colo productos fuera de alcance (TR, XX) en el destino.
+
+version: 2
+nombre: Ensayo 2 - correcciones de alcance y fechas
+descripcion: >
+  Corrige el umbral de siglo (30), agrega la deduplicacion de clientes por nombre
+  normalizado y documento, y ordena los mapeos de producto segun ADR-005: CJ migra
+  con segmento juvenil, TR y XX ya no ingresan al destino.
+
+umbral_siglo: 30
+deduplicacion_clientes: true
+validar_fechas_contextual: true
+correccion_signos: false
+extraccion_texto_libre: false
+ajustes_contables: false
+tolerancia_conciliacion: 0.01
+
+mapeo_productos:
+  CA: {destino: CA, tratamiento: cargar}
+  CC: {destino: CC, tratamiento: cargar}
+  CJ: {destino: CA, tratamiento: cargar, marca: segmento_juvenil}
+  CI: {destino: null, tratamiento: rechazar}
+  TR: {destino: null, tratamiento: rechazar}
+  XX: {destino: null, tratamiento: revisar}
+  PP: {destino: PP, tratamiento: cargar}
+  PH: {destino: null, tratamiento: rechazar}
+  PF: {destino: PF, tratamiento: cargar}
+  PE: {destino: PE, tratamiento: cargar}
+
+ventana_meses: 12
+generar_bitacora: true

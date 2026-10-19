@@ -1,0 +1,6 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+saldos.dat,id_cuenta,saldo_cuenta,id_cuenta,entero,S,S,directo,,Clave de cuenta ya migrada
+saldos.dat,moneda,saldo_cuenta,moneda,texto,S,S,directo,,
+saldos.dat,saldo_apertura,saldo_cuenta,saldo_apertura,importe,S,S,importe_signo_final,RN-17,Dos decimales implicitos
+saldos.dat,saldo_final,saldo_cuenta,saldo_final,importe,S,S,importe_signo_final,RN-17,Se concilia contra la cadena de movimientos
+saldos.dat,fecha_saldo,saldo_cuenta,fecha_saldo,fecha,S,S,fecha_aammdd,RN-03,,

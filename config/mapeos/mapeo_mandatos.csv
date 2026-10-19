@@ -1,0 +1,10 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+mandatos.dat,id_mandato,mandato_debito,id_mandato,entero,S,S,directo,RN-00,,
+mandatos.dat,id_cliente,mandato_debito,id_cliente,entero,S,S,directo,,Integridad referencial con cliente
+mandatos.dat,id_cuenta_debito,mandato_debito,id_cuenta_debito,entero,S,S,directo,,Integridad referencial con cuenta; cuenta inexistente va a revision
+mandatos.dat,codigo_servicio,mandato_debito,codigo_servicio,texto,S,S,mapear_servicio,RN-28,
+mandatos.dat,referencia_servicio,mandato_debito,referencia_servicio,texto,S,N,normalizar_texto,RN-01,,
+mandatos.dat,importe_maximo,mandato_debito,importe_maximo,importe,S,S,importe_signo_final,RN-17,,
+mandatos.dat,fecha_alta,mandato_debito,fecha_alta,fecha,S,S,fecha_aammdd,RN-03,,
+mandatos.dat,estado_mandato,mandato_debito,estado,texto,S,S,mapear_estado_mandato,RN-16,
+mandatos.dat,frecuencia,mandato_debito,frecuencia,texto,S,S,mapear_frecuencia,RN-27,

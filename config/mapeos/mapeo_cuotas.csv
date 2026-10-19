@@ -1,0 +1,9 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+cuotas.dat,id_prestamo,cuota_prestamo,id_prestamo,entero,S,S,directo,,Integridad referencial con prestamo
+cuotas.dat,numero_cuota,cuota_prestamo,numero_cuota,entero,S,S,directo,,Clave compuesta con id_prestamo
+cuotas.dat,fecha_vencimiento,cuota_prestamo,fecha_vencimiento,fecha,S,S,fecha_aammdd,RN-03,,
+cuotas.dat,capital,cuota_prestamo,capital,importe,S,S,importe_signo_final,RN-17,,
+cuotas.dat,interes,cuota_prestamo,interes,importe,S,S,importe_signo_final,RN-17,,
+cuotas.dat,total,cuota_prestamo,total,importe,S,S,importe_signo_final,RN-17,Se valida capital mas interes
+cuotas.dat,estado_cuota,cuota_prestamo,estado,texto,S,S,mapear_estado_cuota,RN-14,
+cuotas.dat,fecha_pago,cuota_prestamo,fecha_pago,fecha,S,N,fecha_aammdd_opcional,RN-03,000000 a nulo

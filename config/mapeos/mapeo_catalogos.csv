@@ -1,0 +1,58 @@
+dominio,codigo_legado,valor_destino,descripcion,regla,version_minima
+producto,CA,CA,Caja de ahorro,RN-10,v1
+producto,CC,CC,Cuenta corriente,RN-10,v1
+producto,CJ,CA,Caja de ahorro con segmento juvenil,RN-10,v2
+producto,CI,CC,Cuenta corriente con bandera internacional,RN-10,v3
+producto,TR,RECHAZAR,Tarjeta de credito fuera de alcance del destino,RN-10,v1
+producto,XX,REVISION,Codigo desconocido a cola de revision,RN-10,v1
+producto,PP,PP,Prestamo personal,RN-10,v1
+producto,PH,RECHAZAR,Prestamo hipotecario fuera de alcance del destino,RN-10,v1
+producto,PF,PF,Plazo fijo tradicional,RN-10,v1
+producto,PE,PE,Plazo fijo precancelable,RN-10,v1
+tipo_documento,DN,DNI,Documento nacional de identidad,RN-05,v1
+tipo_documento,CI,CI,Cedula de identidad,RN-05,v1
+tipo_documento,PA,PAS,Pasaporte,RN-05,v1
+estado_cliente,A,activo,Cliente activo,RN-08,v1
+estado_cliente,I,inactivo,Cliente inactivo,RN-08,v1
+estado_cliente,B,bloqueado,Cliente bloqueado,RN-08,v1
+estado_cliente,D,baja,Cliente dado de baja,RN-08,v1
+estado_cuenta,A,activa,Cuenta activa,RN-09,v1
+estado_cuenta,D,dormida,Cuenta dormida,RN-09,v1
+estado_cuenta,B,bloqueada,Cuenta bloqueada,RN-09,v1
+estado_cuenta,C,cerrada,Cuenta cerrada,RN-09,v1
+estado_cuenta,X,desconocida,Estado desconocido a revision,RN-09,v1
+estado_prestamo,VI,vigente,Prestamo vigente,RN-13,v1
+estado_prestamo,MO,moroso,Prestamo moroso,RN-13,v1
+estado_prestamo,AT,atrasado,Prestamo atrasado,RN-13,v1
+estado_prestamo,CA,cancelado,Prestamo cancelado,RN-13,v1
+estado_cuota,P,pagada,Cuota pagada,RN-14,v1
+estado_cuota,V,vencida,Cuota vencida impaga,RN-14,v1
+estado_cuota,C,cancelada,Cuota cancelada por cancelacion anticipada,RN-14,v1
+estado_plazo,V,vigente,Plazo vigente,RN-15,v1
+estado_plazo,R,renovado,Plazo renovado al vencimiento,RN-15,v1
+estado_plazo,C,cancelado,Plazo cancelado,RN-15,v1
+estado_mandato,A,activo,Mandato activo,RN-16,v1
+estado_mandato,S,suspendido,Mandato suspendido,RN-16,v1
+estado_mandato,B,baja,Mandato dado de baja,RN-16,v1
+canal,VE,ventanilla,Operado en sucursal,RN-19,v1
+canal,AT,cajero automatico,Operado en cajero automatico,RN-19,v1
+canal,IB,internet banking,Operado por home banking,RN-19,v1
+canal,MO,banca movil,Operado por aplicacion movil,RN-19,v1
+codigo_operacion,01,deposito,Deposito de efectivo o transferencia entrante,RN-20,v1
+codigo_operacion,02,extraccion,Extraccion de efectivo,RN-20,v1
+codigo_operacion,03,transferencia recibida,Transferencia recibida,RN-20,v1
+codigo_operacion,04,transferencia enviada,Transferencia enviada,RN-20,v1
+codigo_operacion,05,pago de cuota,Pago de cuota de prestamo,RN-20,v1
+codigo_operacion,06,comision,Comision bancaria (debito),RN-20,v1
+codigo_operacion,07,acreditacion intereses,Acreditacion de intereses,RN-20,v1
+codigo_operacion,08,debito automatico,Debito automatico de servicios,RN-20,v1
+codigo_operacion,09,impuesto,Debito de impuesto o sellado,RN-20,v1
+moneda,ARS,ARS,Peso argentino,RN-31,v1
+moneda,USD,USD,Dólar estadounidense,RN-31,v1
+frecuencia,M,mensual,Frecuencia mensual,RN-27,v1
+frecuencia,S,semanal,Frecuencia semanal,RN-27,v1
+frecuencia,Q,trimestral,Frecuencia trimestral,RN-27,v1
+servicio_mandato,SEG,seguro,Debito de prima de seguro,RN-28,v1
+servicio_mandato,PRE,prestamo,Debito de cuota de prestamo,RN-28,v1
+servicio_mandato,SER,servicios,Debito de servicios varios,RN-28,v1
+servicio_mandato,TEL,telefonia,Debito de telefonia,RN-28,v1

@@ -1,0 +1,13 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+clientes.dat,id_cliente,cliente,id_cliente,entero,S,S,directo,RN-00,Clave preservada del legado
+clientes.dat,nombre_completo,cliente,nombre_completo,texto,S,S,normalizar_texto,RN-01,Mayusculas y espacios simples
+clientes.dat,,cliente,nombre_normalizado,texto,S,S,derivado,RN-02,Clave de deduplicacion sin tildes ni puntuacion
+clientes.dat,fecha_nacimiento,cliente,fecha_nacimiento,fecha,S,S,fecha_aammdd,RN-03,Umbral de siglo 30 y validacion de rango
+clientes.dat,sexo,cliente,sexo,texto,S,S,directo,,
+clientes.dat,telefono,cliente,telefono,texto,S,N,normalizar_telefono,RN-06,Sin separadores; nulo si invalido
+clientes.dat,correo,cliente,correo,texto,S,N,normalizar_correo,RN-07,Minusculas y validacion de formato
+clientes.dat,estado_cliente,cliente,estado,texto,S,S,mapear_estado_cliente,RN-08,Codigo legacy a valor de dominio
+clientes.dat,fecha_alta,cliente,fecha_alta,fecha,S,S,fecha_aammdd,RN-03,,
+clientes.dat,observaciones,cliente,observacion,texto,S,N,normalizar_texto,RN-01,,
+clientes.dat,tipo_documento,documento_cliente,tipo_documento,texto,N,N,mapear_tipo_documento,RN-05,Solo control: el documento se carga desde documentos.dat
+clientes.dat,numero_documento,documento_cliente,numero_documento,texto,N,N,validar_documento,RN-04,Solo control: se cruza con documentos.dat

@@ -1,0 +1,6 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+saldos_contables.dat,codigo_contable,saldo_contable,codigo_contable,texto,S,S,directo,,Referencia al plan de cuentas
+saldos_contables.dat,periodo,saldo_contable,periodo,fecha,S,S,fecha_aammdd,RN-03,,
+saldos_contables.dat,saldo_debe,saldo_contable,saldo_debe,importe,S,S,importe_signo_final,RN-17,,
+saldos_contables.dat,saldo_haber,saldo_contable,saldo_haber,importe,S,S,importe_signo_final,RN-17,,
+saldos_contables.dat,saldo_final,saldo_contable,saldo_final,importe,S,S,importe_signo_final,RN-17,Se valida contra debe menos haber; desfases requieren ajuste con evidencia

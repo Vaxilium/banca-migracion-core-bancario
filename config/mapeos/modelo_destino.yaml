@@ -1,0 +1,219 @@
+# Modelo de datos del core destino (MERIDIANO-CORE) para la migracion.
+# Es la fuente unica del mapeo: el mismo contrato se usa para documentar (fase 5),
+# poblar contratos de validacion (fase 6) y verificar la conciliacion (fase 7).
+
+nombre: MERIDIANO-CORE
+version: 1.0
+notas:
+  - Los identificadores del legado se preservan como claves primarias (trazabilidad por clave).
+  - Los catalogos (producto, sucursal, moneda, tipo_documento, codigo_operacion, canal,
+    servicio_mandato) se derivan de los valores distintos de la extraccion.
+  - Las columnas derivadas no vienen en el archivo de origen: las calcula una regla.
+
+tablas:
+  - nombre: cliente
+    descripcion: Personas físicas titulares de cuentas, créditos y servicios.
+    origen: clientes.dat
+    clave_primaria: [id_cliente]
+    columnas:
+      - {nombre: id_cliente, tipo: entero, nulo: false, origen: id_cliente}
+      - {nombre: nombre_completo, tipo: texto, nulo: false, origen: nombre_completo, regla: RN-01}
+      - {nombre: nombre_normalizado, tipo: texto, nulo: false, derivado: true, regla: RN-02}
+      - {nombre: fecha_nacimiento, tipo: fecha, nulo: false, origen: fecha_nacimiento, regla: RN-03}
+      - {nombre: sexo, tipo: texto, nulo: false, origen: sexo}
+      - {nombre: telefono, tipo: texto, nulo: true, origen: telefono, regla: RN-06}
+      - {nombre: correo, tipo: texto, nulo: true, origen: correo, regla: RN-07}
+      - {nombre: estado, tipo: texto, nulo: false, origen: estado_cliente, regla: RN-08,
+         dominio: [activo, inactivo, bloqueado, baja]}
+      - {nombre: fecha_alta, tipo: fecha, nulo: false, origen: fecha_alta, regla: RN-03}
+      - {nombre: observacion, tipo: texto, nulo: true, origen: observaciones}
+
+  - nombre: documento_cliente
+    descripcion: Documentos de identidad declarados, con vigencia y validación.
+    origen: documentos.dat
+    clave_primaria: [id_documento]
+    columnas:
+      - {nombre: id_documento, tipo: entero, nulo: false, derivado: true, regla: RN-26}
+      - {nombre: id_cliente, tipo: entero, nulo: false, origen: id_cliente, fk: cliente.id_cliente}
+      - {nombre: tipo_documento, tipo: texto, nulo: false, origen: tipo_documento, regla: RN-05,
+         dominio: [DNI, CI, PAS]}
+      - {nombre: numero_documento, tipo: texto, nulo: false, origen: numero_documento, regla: RN-04}
+      - {nombre: pais, tipo: texto, nulo: false, origen: pais}
+      - {nombre: fecha_emision, tipo: fecha, nulo: false, origen: fecha_emision, regla: RN-03}
+      - {nombre: fecha_vencimiento, tipo: fecha, nulo: false, origen: fecha_vencimiento, regla: RN-03}
+      - {nombre: validado, tipo: booleano, nulo: false, origen: validado}
+      - {nombre: vigente, tipo: booleano, nulo: false, derivado: true, regla: RN-25}
+      - {nombre: en_revision, tipo: booleano, nulo: false, derivado: true, regla: RN-25}
+
+  - nombre: domicilio_cliente
+    descripcion: Domicilios particulares y laborales declarados.
+    origen: direcciones.dat
+    clave_primaria: [id_domicilio]
+    columnas:
+      - {nombre: id_domicilio, tipo: entero, nulo: false, derivado: true, regla: RN-26}
+      - {nombre: id_cliente, tipo: entero, nulo: false, origen: id_cliente, fk: cliente.id_cliente}
+      - {nombre: tipo, tipo: texto, nulo: false, origen: tipo_direccion, dominio: [particular, laboral]}
+      - {nombre: calle, tipo: texto, nulo: true, origen: calle, regla: RN-01}
+      - {nombre: numero, tipo: entero, nulo: true, origen: numero}
+      - {nombre: piso, tipo: texto, nulo: true, origen: piso}
+      - {nombre: departamento, tipo: texto, nulo: true, origen: departamento}
+      - {nombre: localidad, tipo: texto, nulo: true, origen: localidad, regla: RN-01}
+      - {nombre: provincia, tipo: texto, nulo: true, origen: provincia}
+      - {nombre: codigo_postal, tipo: texto, nulo: true, origen: codigo_postal}
+      - {nombre: pais, tipo: texto, nulo: false, origen: pais}
+
+  - nombre: cuenta
+    descripcion: Cuentas de depósito vigentes e históricas.
+    origen: cuentas.dat
+    clave_primaria: [id_cuenta]
+    columnas:
+      - {nombre: id_cuenta, tipo: entero, nulo: false, origen: id_cuenta}
+      - {nombre: id_cliente, tipo: entero, nulo: false, origen: id_cliente, fk: cliente.id_cliente}
+      - {nombre: codigo_producto, tipo: texto, nulo: false, origen: codigo_producto, regla: RN-10,
+         fk: producto.codigo}
+      - {nombre: codigo_sucursal, tipo: entero, nulo: false, origen: codigo_sucursal, fk: sucursal.codigo}
+      - {nombre: moneda, tipo: texto, nulo: false, origen: moneda, fk: moneda.codigo}
+      - {nombre: fecha_apertura, tipo: fecha, nulo: false, origen: fecha_apertura, regla: RN-03}
+      - {nombre: estado, tipo: texto, nulo: false, origen: estado_cuenta, regla: RN-09,
+         dominio: [activa, dormida, bloqueada, cerrada, desconocida]}
+      - {nombre: tiene_tarjeta, tipo: booleano, nulo: false, origen: indicador_tarjeta}
+      - {nombre: numero_tarjeta_enmascarado, tipo: texto, nulo: true, origen: numero_tarjeta, regla: RN-11}
+      - {nombre: fecha_ultimo_movimiento, tipo: fecha, nulo: true, origen: fecha_ultimo_movimiento, regla: RN-03}
+      - {nombre: observacion, tipo: texto, nulo: true, origen: observaciones}
+      - {nombre: telefono_alternativo, tipo: texto, nulo: true, derivado: true, regla: RN-12}
+      - {nombre: documento_pendiente, tipo: booleano, nulo: false, derivado: true, regla: RN-12}
+
+  - nombre: saldo_cuenta
+    descripcion: Saldo de apertura de la ventana y saldo final por cuenta.
+    origen: saldos.dat
+    clave_primaria: [id_cuenta]
+    columnas:
+      - {nombre: id_cuenta, tipo: entero, nulo: false, origen: id_cuenta, fk: cuenta.id_cuenta}
+      - {nombre: moneda, tipo: texto, nulo: false, origen: moneda, fk: moneda.codigo}
+      - {nombre: saldo_apertura, tipo: importe, nulo: false, origen: saldo_apertura, regla: RN-17}
+      - {nombre: saldo_final, tipo: importe, nulo: false, origen: saldo_final, regla: RN-17}
+      - {nombre: fecha_saldo, tipo: fecha, nulo: false, origen: fecha_saldo, regla: RN-03}
+
+  - nombre: movimiento
+    descripcion: Movimientos de la ventana de 12 meses y de la carga delta del corte.
+    origen: movimientos.dat
+    clave_primaria: [id_movimiento]
+    columnas:
+      - {nombre: id_movimiento, tipo: entero, nulo: false, origen: id_movimiento}
+      - {nombre: id_cuenta, tipo: entero, nulo: false, origen: id_cuenta, fk: cuenta.id_cuenta}
+      - {nombre: fecha, tipo: fecha, nulo: false, origen: fecha_movimiento, regla: RN-03}
+      - {nombre: hora, tipo: hora, nulo: false, origen: hora_movimiento, regla: RN-22}
+      - {nombre: codigo_operacion, tipo: texto, nulo: false, origen: codigo_operacion, regla: RN-20,
+         fk: codigo_operacion.codigo}
+      - {nombre: canal, tipo: texto, nulo: false, origen: canal, regla: RN-19, fk: canal.codigo}
+      - {nombre: importe, tipo: importe, nulo: false, origen: importe, regla: RN-17}
+      - {nombre: saldo_despues, tipo: importe, nulo: false, origen: saldo_despues, regla: RN-17}
+      - {nombre: numero_comprobante, tipo: entero, nulo: true, origen: numero_comprobante}
+      - {nombre: descripcion, tipo: texto, nulo: true, origen: descripcion, regla: RN-01}
+      - {nombre: codigo_sucursal, tipo: entero, nulo: false, origen: sucursal, fk: sucursal.codigo}
+
+  - nombre: prestamo
+    descripcion: Préstamos personales con su estado y saldo de capital.
+    origen: prestamos.dat
+    clave_primaria: [id_prestamo]
+    columnas:
+      - {nombre: id_prestamo, tipo: entero, nulo: false, origen: id_prestamo}
+      - {nombre: id_cliente, tipo: entero, nulo: false, origen: id_cliente, fk: cliente.id_cliente}
+      - {nombre: id_cuenta_debito, tipo: entero, nulo: false, origen: id_cuenta_debito, fk: cuenta.id_cuenta}
+      - {nombre: codigo_producto, tipo: texto, nulo: false, origen: codigo_producto, regla: RN-10,
+         fk: producto.codigo}
+      - {nombre: moneda, tipo: texto, nulo: false, origen: moneda, fk: moneda.codigo}
+      - {nombre: fecha_otorgamiento, tipo: fecha, nulo: false, origen: fecha_otorgamiento, regla: RN-03}
+      - {nombre: monto_original, tipo: importe, nulo: false, origen: monto_original, regla: RN-17}
+      - {nombre: saldo_capital, tipo: importe, nulo: false, origen: saldo_capital, regla: RN-17}
+      - {nombre: tasa_anual, tipo: porcentaje, nulo: false, origen: tasa_anual, regla: RN-17}
+      - {nombre: plazo_meses, tipo: entero, nulo: false, origen: plazo_meses}
+      - {nombre: cantidad_cuotas, tipo: entero, nulo: false, origen: cantidad_cuotas}
+      - {nombre: cuota_actual, tipo: entero, nulo: false, origen: cuota_actual}
+      - {nombre: estado, tipo: texto, nulo: false, origen: estado_prestamo, regla: RN-13,
+         dominio: [vigente, moroso, atrasado, cancelado]}
+      - {nombre: fecha_ultimo_pago, tipo: fecha, nulo: true, origen: fecha_ultimo_pago, regla: RN-03}
+
+  - nombre: cuota_prestamo
+    descripcion: Plan de pagos de cada préstamo (una fila por cuota).
+    origen: cuotas.dat
+    clave_primaria: [id_prestamo, numero_cuota]
+    columnas:
+      - {nombre: id_prestamo, tipo: entero, nulo: false, origen: id_prestamo, fk: prestamo.id_prestamo}
+      - {nombre: numero_cuota, tipo: entero, nulo: false, origen: numero_cuota}
+      - {nombre: fecha_vencimiento, tipo: fecha, nulo: false, origen: fecha_vencimiento, regla: RN-03}
+      - {nombre: capital, tipo: importe, nulo: false, origen: capital, regla: RN-17}
+      - {nombre: interes, tipo: importe, nulo: false, origen: interes, regla: RN-17}
+      - {nombre: total, tipo: importe, nulo: false, origen: total, regla: RN-17}
+      - {nombre: estado, tipo: texto, nulo: false, origen: estado_cuota, regla: RN-14,
+         dominio: [pagada, vencida, cancelada]}
+      - {nombre: fecha_pago, tipo: fecha, nulo: true, origen: fecha_pago, regla: RN-03}
+
+  - nombre: plazo_fijo
+    descripcion: Depósitos a plazo fijo con condiciones y estado.
+    origen: plazos_fijos.dat
+    clave_primaria: [id_plazo]
+    columnas:
+      - {nombre: id_plazo, tipo: entero, nulo: false, origen: id_plazo}
+      - {nombre: id_cliente, tipo: entero, nulo: false, origen: id_cliente, fk: cliente.id_cliente}
+      - {nombre: id_cuenta_acredita, tipo: entero, nulo: false, origen: id_cuenta_acredita, fk: cuenta.id_cuenta}
+      - {nombre: codigo_producto, tipo: texto, nulo: false, origen: codigo_producto, regla: RN-10,
+         fk: producto.codigo}
+      - {nombre: moneda, tipo: texto, nulo: false, origen: moneda, fk: moneda.codigo}
+      - {nombre: fecha_constitucion, tipo: fecha, nulo: false, origen: fecha_constitucion, regla: RN-03}
+      - {nombre: fecha_vencimiento, tipo: fecha, nulo: false, origen: fecha_vencimiento, regla: RN-03}
+      - {nombre: monto_capital, tipo: importe, nulo: false, origen: monto_capital, regla: RN-17}
+      - {nombre: tasa_anual, tipo: porcentaje, nulo: false, origen: tasa_anual, regla: RN-17}
+      - {nombre: plazo_dias, tipo: entero, nulo: false, origen: plazo_dias}
+      - {nombre: estado, tipo: texto, nulo: false, origen: estado_plazo, regla: RN-15,
+         dominio: [vigente, renovado, cancelado]}
+
+  - nombre: mandato_debito
+    descripcion: Mandatos de débito automático de servicios y cuotas.
+    origen: mandatos.dat
+    clave_primaria: [id_mandato]
+    columnas:
+      - {nombre: id_mandato, tipo: entero, nulo: false, origen: id_mandato}
+      - {nombre: id_cliente, tipo: entero, nulo: false, origen: id_cliente, fk: cliente.id_cliente}
+      - {nombre: id_cuenta_debito, tipo: entero, nulo: false, origen: id_cuenta_debito, fk: cuenta.id_cuenta}
+      - {nombre: codigo_servicio, tipo: texto, nulo: false, origen: codigo_servicio, fk: servicio_mandato.codigo}
+      - {nombre: referencia_servicio, tipo: texto, nulo: true, origen: referencia_servicio}
+      - {nombre: importe_maximo, tipo: importe, nulo: false, origen: importe_maximo, regla: RN-17}
+      - {nombre: fecha_alta, tipo: fecha, nulo: false, origen: fecha_alta, regla: RN-03}
+      - {nombre: estado, tipo: texto, nulo: false, origen: estado_mandato, regla: RN-16,
+         dominio: [activo, suspendido, baja]}
+      - {nombre: frecuencia, tipo: texto, nulo: false, origen: frecuencia, regla: RN-27,
+         dominio: [mensual, semanal, trimestral]}
+
+  - nombre: cuenta_contable
+    descripcion: Plan de cuentas contable del core nuevo.
+    origen: plan_cuentas.dat
+    clave_primaria: [codigo_contable]
+    columnas:
+      - {nombre: codigo_contable, tipo: texto, nulo: false, origen: codigo_contable}
+      - {nombre: nombre_cuenta, tipo: texto, nulo: false, origen: nombre_cuenta, regla: RN-01}
+      - {nombre: tipo_cuenta, tipo: texto, nulo: false, origen: tipo_cuenta,
+         dominio: [activo, pasivo, resultado]}
+      - {nombre: nivel, tipo: entero, nulo: false, origen: nivel}
+      - {nombre: cuenta_padre, tipo: texto, nulo: true, origen: cuenta_padre, fk: cuenta_contable.codigo_contable}
+      - {nombre: moneda, tipo: texto, nulo: false, origen: moneda, fk: moneda.codigo}
+
+  - nombre: saldo_contable
+    descripcion: Saldos del libro mayor por cuenta contable y período.
+    origen: saldos_contables.dat
+    clave_primaria: [codigo_contable, periodo]
+    columnas:
+      - {nombre: codigo_contable, tipo: texto, nulo: false, origen: codigo_contable, fk: cuenta_contable.codigo_contable}
+      - {nombre: periodo, tipo: fecha, nulo: false, origen: periodo, regla: RN-03}
+      - {nombre: saldo_debe, tipo: importe, nulo: false, origen: saldo_debe, regla: RN-17}
+      - {nombre: saldo_haber, tipo: importe, nulo: false, origen: saldo_haber, regla: RN-17}
+      - {nombre: saldo_final, tipo: importe, nulo: false, origen: saldo_final, regla: RN-17}
+
+catalogos:
+  - {nombre: producto, origen: derivado de la extraccion, columnas: [codigo, nombre, familia, moneda]}
+  - {nombre: sucursal, origen: derivado de la extraccion, columnas: [codigo, nombre]}
+  - {nombre: moneda, origen: derivado de la extraccion, columnas: [codigo, nombre]}
+  - {nombre: tipo_documento, origen: derivado de la extraccion, columnas: [codigo, nombre]}
+  - {nombre: codigo_operacion, origen: derivado de la extraccion, columnas: [codigo, nombre, signo]}
+  - {nombre: canal, origen: derivado de la extraccion, columnas: [codigo, nombre]}
+  - {nombre: servicio_mandato, origen: derivado de la extraccion, columnas: [codigo, nombre]}

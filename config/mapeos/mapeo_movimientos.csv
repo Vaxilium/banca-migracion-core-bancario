@@ -1,0 +1,12 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+movimientos.dat,id_movimiento,movimiento,id_movimiento,entero,S,S,directo,RN-00,,
+movimientos.dat,id_cuenta,movimiento,id_cuenta,entero,S,S,directo,,Integridad referencial con cuenta
+movimientos.dat,fecha_movimiento,movimiento,fecha,fecha,S,S,fecha_aammdd,RN-03,Validar dentro de la ventana de 12 meses
+movimientos.dat,hora_movimiento,movimiento,hora,hora,S,S,fecha_hora,RN-22,HHMM a hora
+movimientos.dat,codigo_operacion,movimiento,codigo_operacion,texto,S,S,mapear_codigo_operacion,RN-20,
+movimientos.dat,canal,movimiento,canal,texto,S,S,mapear_canal,RN-19,
+movimientos.dat,importe,movimiento,importe,importe,S,S,importe_signo_final,RN-17,Signo al final del campo
+movimientos.dat,saldo_despues,movimiento,saldo_despues,importe,S,S,importe_signo_final,RN-17,
+movimientos.dat,numero_comprobante,movimiento,numero_comprobante,entero,S,N,directo,,
+movimientos.dat,descripcion,movimiento,descripcion,texto,S,N,normalizar_texto,RN-01,,
+movimientos.dat,sucursal,movimiento,codigo_sucursal,entero,S,S,directo,,

@@ -1,0 +1,34 @@
+# Reglas del ensayo 3 (final): correccion de signos, cuentas internacionales,
+# extraccion de datos desde texto libre y ajustes contables con evidencia.
+# Parte del ensayo 2 y agrega los tratamientos finos que quedaron pendientes.
+
+version: 3
+nombre: Ensayo 3 - correccion de signos y datos finos
+descripcion: >
+  Corrige el signo de las comisiones invertidas en origen (el signo del campo no
+  coincide con el tipo de operacion), migra CI como cuenta corriente internacional,
+  extrae telefono y alertas desde las observaciones de texto libre y aplica ajustes
+  contables respaldados para los desfases detectados en el ensayo 2.
+
+umbral_siglo: 30
+deduplicacion_clientes: true
+validar_fechas_contextual: true
+correccion_signos: true
+extraccion_texto_libre: true
+ajustes_contables: true
+tolerancia_conciliacion: 0.01
+
+mapeo_productos:
+  CA: {destino: CA, tratamiento: cargar}
+  CC: {destino: CC, tratamiento: cargar}
+  CJ: {destino: CA, tratamiento: cargar, marca: segmento_juvenil}
+  CI: {destino: CC, tratamiento: cargar, marca: internacional}
+  TR: {destino: null, tratamiento: rechazar}
+  XX: {destino: null, tratamiento: revisar}
+  PP: {destino: PP, tratamiento: cargar}
+  PH: {destino: null, tratamiento: rechazar}
+  PF: {destino: PF, tratamiento: cargar}
+  PE: {destino: PE, tratamiento: cargar}
+
+ventana_meses: 12
+generar_bitacora: true

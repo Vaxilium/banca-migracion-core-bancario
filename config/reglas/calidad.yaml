@@ -1,0 +1,139 @@
+# Reglas de calidad y validacion aplicadas por el pipeline (fase 6) y reportadas en
+# el perfilado (fase 6) y la conciliacion (fase 7). severidad: bloqueante rechaza la
+# fila; grave la envia a revision; leve la reporta sin detener el flujo.
+
+reglas:
+  - id: CAL-001
+    nombre: Documento de identidad único por tipo
+    entidad: documento_cliente
+    tipo: unicidad
+    campos: [tipo_documento, numero_documento]
+    severidad: grave
+    accion: revisar
+    detalle: Un mismo documento no puede pertenecer a dos clientes distintos.
+
+  - id: CAL-002
+    nombre: Formato de documento según tipo
+    entidad: documento_cliente
+    tipo: formato
+    campos: [tipo_documento, numero_documento]
+    severidad: grave
+    accion: revisar
+    detalle: DNI y CI validan digito verificador; PAS valida el patron de tres letras y seis digitos.
+
+  - id: CAL-003
+    nombre: Fecha válida y en rango razonable
+    entidad: todas
+    tipo: rango
+    campos: [fecha_nacimiento, fecha_alta, fecha_movimiento, fecha_vencimiento, fecha_pago, periodo]
+    severidad: bloqueante
+    accion: rechazar
+    detalle: Fechas convertidas con umbral de siglo 30 y validadas contra su rango contextual.
+
+  - id: CAL-004
+    nombre: Cuenta con cliente existente
+    entidad: cuenta
+    tipo: integridad_referencial
+    campos: [id_cliente]
+    severidad: grave
+    accion: revisar
+    detalle: Las cuentas huerfanas no se cargan y quedan en cola de revision.
+
+  - id: CAL-005
+    nombre: Movimiento con cuenta existente
+    entidad: movimiento
+    tipo: integridad_referencial
+    campos: [id_cuenta]
+    severidad: bloqueante
+    accion: rechazar
+    detalle: Sin cuenta destino no hay donde imputar el movimiento.
+
+  - id: CAL-006
+    nombre: Movimiento dentro de la ventana de migración
+    entidad: movimiento
+    tipo: rango
+    campos: [fecha]
+    severidad: bloqueante
+    accion: rechazar
+    detalle: Fuera de la ventana de 12 meses (ADR-007) el movimiento se rechaza con motivo.
+
+  - id: CAL-007
+    nombre: Saldo de cuenta concilia con movimientos
+    entidad: saldo_cuenta
+    tipo: coherencia
+    campos: [saldo_final]
+    severidad: grave
+    accion: reportar
+    detalle: saldo_apertura mas suma de importes debe igualar saldo_final dentro de la tolerancia.
+
+  - id: CAL-008
+    nombre: Signo coherente con el código de operación
+    entidad: movimiento
+    tipo: coherencia
+    campos: [codigo_operacion, importe]
+    severidad: grave
+    accion: corregir_con_regla
+    detalle: Operaciones de debito con importe positivo o de credito con importe negativo se corrigen solo en reglas v3.
+
+  - id: CAL-009
+    nombre: Saldo de capital no supera el monto original
+    entidad: prestamo
+    tipo: rango
+    campos: [saldo_capital, monto_original]
+    severidad: grave
+    accion: revisar
+    detalle: Un saldo mayor al monto original indica corrupcion del registro.
+
+  - id: CAL-010
+    nombre: Total de cuota igual a capital más interés
+    entidad: cuota_prestamo
+    tipo: coherencia
+    campos: [total, capital, interes]
+    severidad: grave
+    accion: revisar
+    detalle: La suma de componentes debe igualar el total dentro de la tolerancia.
+
+  - id: CAL-011
+    nombre: Vencimiento de plazo coherente con plazo en días
+    entidad: plazo_fijo
+    tipo: coherencia
+    campos: [fecha_constitucion, fecha_vencimiento, plazo_dias]
+    severidad: grave
+    accion: revisar
+    detalle: La diferencia de fechas debe igualar plazo_dias dentro de la tolerancia de calendario.
+
+  - id: CAL-012
+    nombre: Mandato con cuenta de débito existente
+    entidad: mandato_debito
+    tipo: integridad_referencial
+    campos: [id_cuenta_debito]
+    severidad: grave
+    accion: revisar
+    detalle: Mandatos con cuenta inexistente quedan suspendidos hasta resolucion manual.
+
+  - id: CAL-013
+    nombre: Saldo contable cuadra con debe menos haber
+    entidad: saldo_contable
+    tipo: coherencia
+    campos: [saldo_debe, saldo_haber, saldo_final]
+    severidad: bloqueante
+    accion: reportar
+    detalle: Los desfases se ajustan solo con evidencia y aprobacion (ADR-012).
+
+  - id: CAL-014
+    nombre: Número de tarjeta enmascarado
+    entidad: cuenta
+    tipo: seguridad
+    campos: [numero_tarjeta_enmascarado]
+    severidad: bloqueante
+    accion: rechazar
+    detalle: Ningun numero de tarjeta completo puede persistir en el destino ni en los informes.
+
+  - id: CAL-015
+    nombre: Estado dentro del dominio del catálogo
+    entidad: todas
+    tipo: dominio
+    campos: [estado]
+    severidad: grave
+    accion: revisar
+    detalle: Valores fuera de dominio (por ejemplo X) van a revision con motivo.

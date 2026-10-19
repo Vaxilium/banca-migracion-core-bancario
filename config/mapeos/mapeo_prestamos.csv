@@ -1,0 +1,15 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+prestamos.dat,id_prestamo,prestamo,id_prestamo,entero,S,S,directo,RN-00,,
+prestamos.dat,id_cliente,prestamo,id_cliente,entero,S,S,directo,,Integridad referencial con cliente
+prestamos.dat,id_cuenta_debito,prestamo,id_cuenta_debito,entero,S,S,directo,,Integridad referencial con cuenta
+prestamos.dat,codigo_producto,prestamo,codigo_producto,texto,S,S,mapear_producto,RN-10,PH sin equivalente se rechaza
+prestamos.dat,moneda,prestamo,moneda,texto,S,S,directo,,
+prestamos.dat,fecha_otorgamiento,prestamo,fecha_otorgamiento,fecha,S,S,fecha_aammdd,RN-03,,
+prestamos.dat,monto_original,prestamo,monto_original,importe,S,S,importe_signo_final,RN-17,,
+prestamos.dat,saldo_capital,prestamo,saldo_capital,importe,S,S,importe_signo_final,RN-17,Se concilia contra cuotas pendientes
+prestamos.dat,tasa_anual,prestamo,tasa_anual,porcentaje,S,S,importe_signo_final,RN-17,Dos decimales implicitos
+prestamos.dat,plazo_meses,prestamo,plazo_meses,entero,S,S,directo,,
+prestamos.dat,cantidad_cuotas,prestamo,cantidad_cuotas,entero,S,S,directo,,
+prestamos.dat,cuota_actual,prestamo,cuota_actual,entero,S,S,directo,,
+prestamos.dat,estado_prestamo,prestamo,estado,texto,S,S,mapear_estado_prestamo,RN-13,
+prestamos.dat,fecha_ultimo_pago,prestamo,fecha_ultimo_pago,fecha,S,N,fecha_aammdd,RN-03,Vacio si nunca pago

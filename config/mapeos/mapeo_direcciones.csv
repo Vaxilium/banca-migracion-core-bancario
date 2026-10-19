@@ -1,0 +1,12 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+direcciones.dat,id_cliente,domicilio_cliente,id_cliente,entero,S,S,directo,,
+direcciones.dat,tipo_direccion,domicilio_cliente,tipo,texto,S,S,mapear_tipo_direccion,RN-29,P a particular; L a laboral
+direcciones.dat,calle,domicilio_cliente,calle,texto,S,N,normalizar_texto,RN-01,,
+direcciones.dat,numero,domicilio_cliente,numero,entero,S,N,directo,,
+direcciones.dat,piso,domicilio_cliente,piso,texto,S,N,directo,,Vacio a nulo
+direcciones.dat,departamento,domicilio_cliente,departamento,texto,S,N,directo,,Vacio a nulo
+direcciones.dat,localidad,domicilio_cliente,localidad,texto,S,N,normalizar_texto,RN-01,,
+direcciones.dat,provincia,domicilio_cliente,provincia,texto,S,N,directo,,A revisar si es ZZ o XX
+direcciones.dat,codigo_postal,domicilio_cliente,codigo_postal,texto,S,N,directo,,
+direcciones.dat,pais,domicilio_cliente,pais,texto,S,S,directo,,
+direcciones.dat,,domicilio_cliente,id_domicilio,entero,S,S,derivado,RN-26,Secuencia asignada por el pipeline

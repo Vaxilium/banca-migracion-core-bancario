@@ -1,0 +1,11 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+documentos.dat,id_cliente,documento_cliente,id_cliente,entero,S,S,directo,,
+documentos.dat,tipo_documento,documento_cliente,tipo_documento,texto,S,S,mapear_tipo_documento,RN-05,DN a DNI; PA a PAS
+documentos.dat,numero_documento,documento_cliente,numero_documento,texto,S,S,validar_documento,RN-04,DNI y CI con digito verificador; PAS patron de letras
+documentos.dat,pais,documento_cliente,pais,texto,S,S,directo,,
+documentos.dat,fecha_emision,documento_cliente,fecha_emision,fecha,S,S,fecha_aammdd,RN-03,,
+documentos.dat,fecha_vencimiento,documento_cliente,fecha_vencimiento,fecha,S,S,fecha_aammdd,RN-03,,
+documentos.dat,validado,documento_cliente,validado,booleano,S,N,mapear_booleano,RN-25,S a true; N a false
+documentos.dat,,documento_cliente,id_documento,entero,S,S,derivado,RN-26,Secuencia asignada por el pipeline
+documentos.dat,,documento_cliente,vigente,booleano,S,S,derivado,RN-25,Comparacion de vencimiento con la fecha de extraccion
+documentos.dat,,documento_cliente,en_revision,booleano,S,S,derivado,RN-25,Vencido sin marcar o no validado

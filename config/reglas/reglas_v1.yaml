@@ -1,0 +1,33 @@
+# Reglas del ensayo 1 (linea base). Version inicial del pipeline: se escribio rapido
+# para probar el flujo completo y contiene tres defectos conocidos que se corrigen en
+# ensayos posteriores: umbral de siglo 25, productos CJ/CI sin mapeo y TR/XX mal
+# clasificados. No corregir aqui: la mejora debe quedar en reglas_v2.yaml y v3.
+
+version: 1
+nombre: Ensayo 1 - linea base
+descripcion: >
+  Primera version de las reglas, orientada a validar el flujo de punta a punta.
+  Sin deduplicacion, sin correccion de signos y con umbral de siglo incorrecto.
+
+umbral_siglo: 25
+deduplicacion_clientes: false
+validar_fechas_contextual: false
+correccion_signos: false
+extraccion_texto_libre: false
+ajustes_contables: false
+tolerancia_conciliacion: 0.01
+
+mapeo_productos:
+  CA: {destino: CA, tratamiento: cargar}
+  CC: {destino: CC, tratamiento: cargar}
+  CJ: {destino: null, tratamiento: rechazar}
+  CI: {destino: null, tratamiento: rechazar}
+  TR: {destino: CC, tratamiento: cargar}
+  XX: {destino: CA, tratamiento: cargar}
+  PP: {destino: PP, tratamiento: cargar}
+  PH: {destino: PP, tratamiento: cargar}
+  PF: {destino: PF, tratamiento: cargar}
+  PE: {destino: PE, tratamiento: cargar}
+
+ventana_meses: 12
+generar_bitacora: true

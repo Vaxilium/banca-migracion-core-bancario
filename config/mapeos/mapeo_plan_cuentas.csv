@@ -1,0 +1,7 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+plan_cuentas.dat,codigo_contable,cuenta_contable,codigo_contable,texto,S,S,directo,RN-00,Clave preservada
+plan_cuentas.dat,nombre_cuenta,cuenta_contable,nombre_cuenta,texto,S,S,normalizar_texto,RN-01,,
+plan_cuentas.dat,tipo_cuenta,cuenta_contable,tipo_cuenta,texto,S,S,mapear_tipo_cuenta,RN-30,A a activo; P a pasivo; R a resultado
+plan_cuentas.dat,nivel,cuenta_contable,nivel,entero,S,S,directo,,
+plan_cuentas.dat,cuenta_padre,cuenta_contable,cuenta_padre,texto,S,N,directo,,Vacia en las raices
+plan_cuentas.dat,moneda,cuenta_contable,moneda,texto,S,S,directo,,

@@ -1,0 +1,14 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+cuentas.dat,id_cuenta,cuenta,id_cuenta,entero,S,S,directo,RN-00,Clave preservada del legado
+cuentas.dat,id_cliente,cuenta,id_cliente,entero,S,S,directo,,Integridad referencial con cliente
+cuentas.dat,codigo_producto,cuenta,codigo_producto,texto,S,S,mapear_producto,RN-10,Rechazo o revision segun version de reglas
+cuentas.dat,codigo_sucursal,cuenta,codigo_sucursal,entero,S,S,directo,,
+cuentas.dat,moneda,cuenta,moneda,texto,S,S,directo,,
+cuentas.dat,fecha_apertura,cuenta,fecha_apertura,fecha,S,S,fecha_aammdd,RN-03,,
+cuentas.dat,estado_cuenta,cuenta,estado,texto,S,S,mapear_estado_cuenta,RN-09,Estado X a desconocida con revision
+cuentas.dat,indicador_tarjeta,cuenta,tiene_tarjeta,booleano,S,S,mapear_booleano,RN-25,,
+cuentas.dat,numero_tarjeta,cuenta,numero_tarjeta_enmascarado,texto,S,N,enmascarar_tarjeta,RN-11,Solo ultimos cuatro digitos
+cuentas.dat,fecha_ultimo_movimiento,cuenta,fecha_ultimo_movimiento,fecha,S,N,fecha_aammdd,RN-03,Vacio si no tuvo movimientos
+cuentas.dat,observaciones,cuenta,observacion,texto,S,N,normalizar_texto,RN-01,Texto libre sobrecargado
+cuentas.dat,,cuenta,telefono_alternativo,texto,S,N,derivado,RN-12,Extraido de observaciones con patron TEL
+cuentas.dat,,cuenta,documento_pendiente,booleano,S,S,derivado,RN-12,Detecta DOC PENDIENTE en observaciones

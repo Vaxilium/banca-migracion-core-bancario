@@ -1,0 +1,12 @@
+archivo_origen,campo_origen,tabla_destino,campo_destino,tipo_destino,carga,obligatorio,transformacion,regla,observacion
+plazos_fijos.dat,id_plazo,plazo_fijo,id_plazo,entero,S,S,directo,RN-00,,
+plazos_fijos.dat,id_cliente,plazo_fijo,id_cliente,entero,S,S,directo,,Integridad referencial con cliente
+plazos_fijos.dat,id_cuenta_acredita,plazo_fijo,id_cuenta_acredita,entero,S,S,directo,,Integridad referencial con cuenta
+plazos_fijos.dat,codigo_producto,plazo_fijo,codigo_producto,texto,S,S,mapear_producto,RN-10,,
+plazos_fijos.dat,moneda,plazo_fijo,moneda,texto,S,S,directo,,,
+plazos_fijos.dat,fecha_constitucion,plazo_fijo,fecha_constitucion,fecha,S,S,fecha_aammdd,RN-03,,
+plazos_fijos.dat,fecha_vencimiento,plazo_fijo,fecha_vencimiento,fecha,S,S,fecha_aammdd,RN-03,Se valida contra plazo en dias
+plazos_fijos.dat,monto_capital,plazo_fijo,monto_capital,importe,S,S,importe_signo_final,RN-17,,
+plazos_fijos.dat,tasa_anual,plazo_fijo,tasa_anual,porcentaje,S,S,importe_signo_final,RN-17,,
+plazos_fijos.dat,plazo_dias,plazo_fijo,plazo_dias,entero,S,S,directo,,
+plazos_fijos.dat,estado_plazo,plazo_fijo,estado,texto,S,S,mapear_estado_plazo,RN-15,
