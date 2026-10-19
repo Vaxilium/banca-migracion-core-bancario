@@ -76,4 +76,4 @@ primeros diez días.
 - [Runbook de corte](../09-corte-y-reversa/runbook-de-corte.md)
 - [Informe de conciliación](../07-conciliacion/informe-de-conciliacion.md)
 - [ADR-012: ajustes de migración](../decisiones/ADR-012-ajustes-de-migracion.md)
-- [Requisitos](../../config/requisitos/requisitos.yaml)
+- [Requisitos](https://github.com/Vaxilium/banca-migracion-core-bancario/blob/main/config/requisitos/requisitos.yaml)

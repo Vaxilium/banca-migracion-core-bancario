@@ -1,0 +1,84 @@
+site_name: Migración del core bancario — Banco Meridiano Austral
+site_description: >-
+  Caso de portafolio de migración de un core bancario, con datos sintéticos,
+  tres ensayos, conciliación, corte y reversa, y trazabilidad de requisitos.
+site_author: Franco Tilleria
+repo_url: https://github.com/Vaxilium/banca-migracion-core-bancario
+repo_name: Vaxilium/banca-migracion-core-bancario
+docs_dir: docs
+site_dir: site
+use_directory_urls: false
+
+theme:
+  name: material
+  language: es
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - toc.integrate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Inicio: index.md
+  - Resumen ejecutivo: resumen-ejecutivo.md
+  - Presentación al comité: presentacion-comite.md
+  - Tablero interactivo: tablero.html
+  - Fase 1 · Marco y estrategia:
+      - Acta de proyecto: 01-marco-y-estrategia/acta-de-proyecto.md
+      - Caso de negocio: 01-marco-y-estrategia/caso-de-negocio.md
+      - Estrategia de migración: 01-marco-y-estrategia/estrategia-de-migracion.md
+      - Indicadores del proyecto: 01-marco-y-estrategia/indicadores-del-proyecto.md
+      - Interesados y gobierno: 01-marco-y-estrategia/interesados-y-gobierno.md
+  - Fase 2 · Análisis AS-IS:
+      - Puntos de dolor: 02-analisis-as-is/puntos-de-dolor.md
+      - Mapa de capacidades: 02-analisis-as-is/mapa-de-capacidades.md
+      - Flujos clave: 02-analisis-as-is/flujos-clave.md
+      - Catálogo de productos: 02-analisis-as-is/catalogo-de-productos.md
+      - Inventario de sistemas: 02-analisis-as-is/inventario-de-sistemas.md
+      - Proceso batch nocturno: 02-analisis-as-is/proceso-batch-nocturno.md
+  - Fase 3 · Análisis de brechas:
+      - Análisis de brechas: 03-analisis-de-brechas/analisis-de-brechas.md
+      - Decisiones de diseño: 03-analisis-de-brechas/decisiones-de-diseno.md
+      - Requisitos: 03-analisis-de-brechas/requisitos.md
+  - Fase 4 · Datos de origen: 04-datos-de-origen/diseno-de-la-extraccion.md
+  - Fase 5 · Modelo y mapeo:
+      - Modelo de datos: 05-mapeo-de-datos/modelo-de-datos.md
+      - Mapeo de datos: 05-mapeo-de-datos/mapeo-de-datos.md
+      - Reglas de transformación: 05-mapeo-de-datos/reglas-de-transformacion.md
+  - Fase 6 · Pipeline: 06-pipeline/pipeline-de-migracion.md
+  - Fase 7 · Conciliación: 07-conciliacion/informe-de-conciliacion.md
+  - Fase 8 · Pruebas: 08-pruebas/estrategia-de-pruebas.md
+  - Fase 9 · Corte y reversa: 09-corte-y-reversa/runbook-de-corte.md
+  - Fase 10 · Gestión del cambio: 10-gestion-del-cambio/analisis-de-impacto.md
+  - Fase 11 · Riesgos y controles: 11-riesgos-y-controles/matriz-de-riesgos.md
+  - Fase 12 · Trazabilidad: 12-trazabilidad/matriz-de-trazabilidad.md
+  - Decisiones:
+      - Estrategia de migración: decisiones/ADR-001-estrategia-de-migracion.md
+      - Gobierno del proyecto: decisiones/ADR-002-gobierno-del-proyecto.md
+      - Alcance funcional: decisiones/ADR-003-alcance-funcional.md
+      - Registro de decisiones: decisiones/ADR-004-registro-de-decisiones.md
+      - Productos sin equivalente: decisiones/ADR-005-productos-sin-equivalente.md
+      - Datos sintéticos: decisiones/ADR-006-datos-sinteticos.md
+      - Ventana histórica: decisiones/ADR-007-ventana-historica.md
+      - Umbral de siglo: decisiones/ADR-008-umbral-de-siglo.md
+      - Deduplicación de clientes: decisiones/ADR-009-deduplicacion-clientes.md
+      - Enmascaramiento: decisiones/ADR-010-enmascaramiento-de-datos.md
+      - Motor de carga: decisiones/ADR-011-motor-de-carga.md
+      - Ajustes de migración: decisiones/ADR-012-ajustes-de-migracion.md
+      - Corte y reversa: decisiones/ADR-013-estrategia-de-corte-y-reversa.md
+  - Glosario: glosario.md

@@ -112,7 +112,7 @@ requisito Must de la migración queda sin evidencia.
 
 ## Referencias
 
-- [Requisitos](../../config/requisitos/requisitos.yaml)
+- [Requisitos](https://github.com/Vaxilium/banca-migracion-core-bancario/blob/main/config/requisitos/requisitos.yaml)
 - [Análisis de brechas](../03-analisis-de-brechas/analisis-de-brechas.md)
 - [Pipeline de migración](../06-pipeline/pipeline-de-migracion.md)
 - [Informe de conciliación](../07-conciliacion/informe-de-conciliacion.md)

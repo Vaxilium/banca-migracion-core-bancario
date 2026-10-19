@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  calidad:
+    name: Pipeline reducido, lint, pruebas y sitio
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generar datos, migrar, conciliar y perfilar (escala piloto)
+        run: make reducido
+
+      - name: Verificar estilo
+        run: make lint
+
+      - name: Publicar evidencia de pruebas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit
+          path: datos/resultados/junit.xml
+          if-no-files-found: ignore
+
+      - name: Construir el sitio de documentación
+        run: make sitio

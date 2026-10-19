@@ -47,7 +47,48 @@ El siguiente cuadro se completa automáticamente con las salidas reales del perf
 del origen generado en la fase 4 (nunca con cifras escritas a mano).
 
 <!-- INICIO AUTO: dolores-perfilado -->
-_(Sección generada automáticamente por `src/informes/actualizar_documentos.py`.)_
+| Entidad | Registros | Clave de control | Filas con clave duplicada |
+|---|---:|---|---:|
+| Clientes | 61.800 | `id_cliente` | 0 |
+| Documentos | 69.000 | `id_cliente`, `tipo_documento`, `numero_documento` | 0 |
+| Direcciones | 75.660 | `id_cliente`, `tipo_direccion` | 0 |
+| Cuentas | 90.059 | `id_cuenta` | 0 |
+| Movimientos | 926.794 | `id_movimiento` | 0 |
+| Préstamos | 18.000 | `id_prestamo` | 0 |
+| Cuotas | 347.316 | `id_prestamo`, `numero_cuota` | 0 |
+| Plazos fijos | 8.000 | `id_plazo` | 0 |
+| Mandatos | 25.000 | `id_mandato` | 0 |
+| Saldos | 90.059 | `id_cuenta` | 0 |
+| Plan de cuentas | 48 | `codigo_contable` | 0 |
+| Saldos contables | 28 | `codigo_contable`, `periodo` | 0 |
+
+| Entidad | Campo | Vacios | Porcentaje |
+|---|---|---:|---:|
+| Direcciones | `localidad` | 1.546 | 2,04 % |
+| Direcciones | `provincia` | 1.507 | 1,99 % |
+| Direcciones | `codigo_postal` | 1.487 | 1,97 % |
+
+| Entidad | Defecto | Casos |
+|---|---|---:|
+| Clientes | `documento_invalido` | 1.236 |
+| Clientes | `documento_repetido_otro_cliente` | 309 |
+| Clientes | `duplicado_nombre_variante` | 1.800 |
+| Clientes | `fecha_nacimiento_imposible` | 927 |
+| Cuentas | `cuenta_huerfana` | 1.801 |
+| Cuentas | `estado_desconocido` | 3.602 |
+| Cuentas | `producto_desconocido` | 3.194 |
+| Cuentas | `producto_fuera_alcance` | 4.866 |
+| Direcciones | `direccion_incompleta` | 4.540 |
+| Documentos | `vencido_sin_marcar` | 2.732 |
+| Mandatos | `cuenta_inexistente` | 500 |
+| Movimientos | `duplicado_reproceso` | 18.172 |
+| Movimientos | `fecha_imposible` | 10.903 |
+| Movimientos | `signo_invertido` | 3.068 |
+| Plazos fijos | `vencimiento_incongruente` | 160 |
+| Préstamos | `saldo_incongruente` | 540 |
+| Saldos | `descuadre_grave` | 450 |
+| Saldos | `descuadre_leve` | 1.801 |
+| Saldos contables | `desfase_contable` | 8 |
 <!-- FIN AUTO: dolores-perfilado -->
 
 ## Priorización

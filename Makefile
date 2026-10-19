@@ -42,7 +42,7 @@ pruebas: entorno
 	@echo "== Ejecutando pruebas automatizadas =="
 	$(PY) -m pytest pruebas -q --junitxml=datos/resultados/junit.xml
 
-informes: trazabilidad pruebas
+informes: perfilado trazabilidad pruebas
 	@echo "== Actualizando documentos con cifras del pipeline =="
 	$(PY) -m src.informes.actualizar_documentos
 

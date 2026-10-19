@@ -90,12 +90,13 @@ escenario sin implementación o una prueba cita un escenario inexistente.
 <!-- INICIO AUTO: pruebas-resumen -->
 | Modulo | Pruebas | Pasadas | Fallidas | Omitidas | Duracion (s) |
 |---|---:|---:|---:|---:|---:|
-| Conciliacion | 5 | 5 | 0 | 0 | 0.44 |
+| Conciliacion | 5 | 5 | 0 | 0 | 0.46 |
+| test_documentacion | 3 | 3 | 0 | 0 | 0.02 |
 | Especificaciones Gherkin | 3 | 3 | 0 | 0 | 0.00 |
 | Generacion determinista | 3 | 3 | 0 | 0 | 0.03 |
-| Migracion y carga | 9 | 9 | 0 | 0 | 1.63 |
+| Migracion y carga | 9 | 9 | 0 | 0 | 1.55 |
 | Reglas de transformacion | 11 | 11 | 0 | 0 | 0.12 |
-| **Total** | **31** | **31** | **0** | **0** | **2.22** |
+| **Total** | **34** | **34** | **0** | **0** | **2.18** |
 <!-- FIN AUTO: pruebas-resumen -->
 
 La prueba de muestras queda omitida mientras no se generen los archivos publicables
@@ -136,4 +137,4 @@ decisión sea trazable.
 - [Pipeline de migración](../06-pipeline/pipeline-de-migracion.md)
 - [Informe de conciliación](../07-conciliacion/informe-de-conciliacion.md)
 - [ADR-012: ajustes de migración](../decisiones/ADR-012-ajustes-de-migracion.md)
-- [Requisitos](../../config/requisitos/requisitos.yaml)
+- [Requisitos](https://github.com/Vaxilium/banca-migracion-core-bancario/blob/main/config/requisitos/requisitos.yaml)
