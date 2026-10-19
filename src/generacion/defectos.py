@@ -76,11 +76,14 @@ class Inyector:
         indices = self._elegir_indices(len(df), tasas["documento_invalido"])
         for indice in indices:
             documento = str(df.at[indice, "numero_documento"]).strip()
-            if documento and documento[-1].isdigit():
+            tipo = str(df.at[indice, "tipo_documento"]).strip()
+            if tipo == "DNI":
                 reemplazo = (int(documento[-1]) + 1) % 10
                 df.at[indice, "numero_documento"] = documento[:-1] + str(reemplazo)
+            elif tipo == "PAS":
+                df.at[indice, "numero_documento"] = "9" + documento[1:]
             else:
-                df.at[indice, "numero_documento"] = documento + "X"
+                df.at[indice, "numero_documento"] = "X" + documento[1:]
             self._registrar(
                 "clientes", "documento_invalido", df.at[indice, "id_cliente"],
                 f"documento={df.at[indice, 'numero_documento']}",
@@ -245,7 +248,13 @@ class Inyector:
     def prestamos(self, df: pd.DataFrame) -> pd.DataFrame:
         """Saldo de capital incongruente con la suma de cuotas pendientes."""
         df = df.copy()
-        indices = self._elegir_indices(len(df), self.tasas["prestamos"]["saldo_incongruente"])
+        candidatas = df.index[df["saldo_capital"] > 0].to_numpy()
+        cuantos = int(round(len(df) * self.tasas["prestamos"]["saldo_incongruente"]))
+        indices = (
+            self.rng.choice(candidatas, size=min(cuantos, len(candidatas)), replace=False)
+            if len(candidatas) and cuantos > 0
+            else np.array([], dtype=int)
+        )
         for indice in indices:
             factor = 1 + float(self.rng.uniform(0.005, 0.05)) * (
                 1 if self.rng.random() < 0.5 else -1

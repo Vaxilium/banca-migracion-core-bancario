@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "cuenta_contable",
+  "type": "object",
+  "required": [
+    "codigo_contable",
+    "nombre_cuenta",
+    "tipo_cuenta",
+    "nivel",
+    "moneda"
+  ],
+  "properties": {
+    "codigo_contable": {
+      "type": "string"
+    },
+    "nombre_cuenta": {
+      "type": "string"
+    },
+    "tipo_cuenta": {
+      "type": "string",
+      "enum": [
+        "activo",
+        "pasivo",
+        "resultado"
+      ]
+    },
+    "nivel": {
+      "type": "integer"
+    },
+    "cuenta_padre": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "moneda": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "cuota_prestamo",
+  "type": "object",
+  "required": [
+    "id_prestamo",
+    "numero_cuota",
+    "fecha_vencimiento",
+    "capital",
+    "interes",
+    "total",
+    "estado"
+  ],
+  "properties": {
+    "id_prestamo": {
+      "type": "integer"
+    },
+    "numero_cuota": {
+      "type": "integer"
+    },
+    "fecha_vencimiento": {
+      "type": "string",
+      "format": "date"
+    },
+    "capital": {
+      "type": "number"
+    },
+    "interes": {
+      "type": "number"
+    },
+    "total": {
+      "type": "number"
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "pagada",
+        "vencida",
+        "cancelada"
+      ]
+    },
+    "fecha_pago": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    }
+  }
+}

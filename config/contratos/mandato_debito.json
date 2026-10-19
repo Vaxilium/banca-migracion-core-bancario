@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "mandato_debito",
+  "type": "object",
+  "required": [
+    "id_mandato",
+    "id_cliente",
+    "id_cuenta_debito",
+    "codigo_servicio",
+    "importe_maximo",
+    "fecha_alta",
+    "estado",
+    "frecuencia"
+  ],
+  "properties": {
+    "id_mandato": {
+      "type": "integer"
+    },
+    "id_cliente": {
+      "type": "integer"
+    },
+    "id_cuenta_debito": {
+      "type": "integer"
+    },
+    "codigo_servicio": {
+      "type": "string"
+    },
+    "referencia_servicio": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "importe_maximo": {
+      "type": "number"
+    },
+    "fecha_alta": {
+      "type": "string",
+      "format": "date"
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "activo",
+        "suspendido",
+        "baja"
+      ]
+    },
+    "frecuencia": {
+      "type": "string",
+      "enum": [
+        "mensual",
+        "semanal",
+        "trimestral"
+      ]
+    }
+  }
+}

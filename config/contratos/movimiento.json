@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "movimiento",
+  "type": "object",
+  "required": [
+    "id_movimiento",
+    "id_cuenta",
+    "fecha",
+    "hora",
+    "codigo_operacion",
+    "canal",
+    "importe",
+    "saldo_despues",
+    "codigo_sucursal"
+  ],
+  "properties": {
+    "id_movimiento": {
+      "type": "integer"
+    },
+    "id_cuenta": {
+      "type": "integer"
+    },
+    "fecha": {
+      "type": "string",
+      "format": "date"
+    },
+    "hora": {
+      "type": "string",
+      "pattern": "^\\d{2}:\\d{2}$"
+    },
+    "codigo_operacion": {
+      "type": "string"
+    },
+    "canal": {
+      "type": "string"
+    },
+    "importe": {
+      "type": "number"
+    },
+    "saldo_despues": {
+      "type": "number"
+    },
+    "numero_comprobante": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "descripcion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "codigo_sucursal": {
+      "type": "integer"
+    }
+  }
+}

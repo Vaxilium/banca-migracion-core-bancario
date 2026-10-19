@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "saldo_cuenta",
+  "type": "object",
+  "required": [
+    "id_cuenta",
+    "moneda",
+    "saldo_apertura",
+    "saldo_final",
+    "fecha_saldo"
+  ],
+  "properties": {
+    "id_cuenta": {
+      "type": "integer"
+    },
+    "moneda": {
+      "type": "string"
+    },
+    "saldo_apertura": {
+      "type": "number"
+    },
+    "saldo_final": {
+      "type": "number"
+    },
+    "fecha_saldo": {
+      "type": "string",
+      "format": "date"
+    }
+  }
+}

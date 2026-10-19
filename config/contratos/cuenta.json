@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "cuenta",
+  "type": "object",
+  "required": [
+    "id_cuenta",
+    "id_cliente",
+    "codigo_producto",
+    "codigo_sucursal",
+    "moneda",
+    "fecha_apertura",
+    "estado",
+    "tiene_tarjeta",
+    "documento_pendiente"
+  ],
+  "properties": {
+    "id_cuenta": {
+      "type": "integer"
+    },
+    "id_cliente": {
+      "type": "integer"
+    },
+    "codigo_producto": {
+      "type": "string"
+    },
+    "codigo_sucursal": {
+      "type": "integer"
+    },
+    "moneda": {
+      "type": "string"
+    },
+    "fecha_apertura": {
+      "type": "string",
+      "format": "date"
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "activa",
+        "dormida",
+        "bloqueada",
+        "cerrada",
+        "desconocida"
+      ]
+    },
+    "tiene_tarjeta": {
+      "type": "boolean"
+    },
+    "numero_tarjeta_enmascarado": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "fecha_ultimo_movimiento": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "observacion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "telefono_alternativo": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "documento_pendiente": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "saldo_contable",
+  "type": "object",
+  "required": [
+    "codigo_contable",
+    "periodo",
+    "saldo_debe",
+    "saldo_haber",
+    "saldo_final"
+  ],
+  "properties": {
+    "codigo_contable": {
+      "type": "string"
+    },
+    "periodo": {
+      "type": "string",
+      "format": "date"
+    },
+    "saldo_debe": {
+      "type": "number"
+    },
+    "saldo_haber": {
+      "type": "number"
+    },
+    "saldo_final": {
+      "type": "number"
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "prestamo",
+  "type": "object",
+  "required": [
+    "id_prestamo",
+    "id_cliente",
+    "id_cuenta_debito",
+    "codigo_producto",
+    "moneda",
+    "fecha_otorgamiento",
+    "monto_original",
+    "saldo_capital",
+    "tasa_anual",
+    "plazo_meses",
+    "cantidad_cuotas",
+    "cuota_actual",
+    "estado"
+  ],
+  "properties": {
+    "id_prestamo": {
+      "type": "integer"
+    },
+    "id_cliente": {
+      "type": "integer"
+    },
+    "id_cuenta_debito": {
+      "type": "integer"
+    },
+    "codigo_producto": {
+      "type": "string"
+    },
+    "moneda": {
+      "type": "string"
+    },
+    "fecha_otorgamiento": {
+      "type": "string",
+      "format": "date"
+    },
+    "monto_original": {
+      "type": "number"
+    },
+    "saldo_capital": {
+      "type": "number"
+    },
+    "tasa_anual": {
+      "type": "number"
+    },
+    "plazo_meses": {
+      "type": "integer"
+    },
+    "cantidad_cuotas": {
+      "type": "integer"
+    },
+    "cuota_actual": {
+      "type": "integer"
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "vigente",
+        "moroso",
+        "atrasado",
+        "cancelado"
+      ]
+    },
+    "fecha_ultimo_pago": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    }
+  }
+}

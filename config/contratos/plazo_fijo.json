@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "plazo_fijo",
+  "type": "object",
+  "required": [
+    "id_plazo",
+    "id_cliente",
+    "id_cuenta_acredita",
+    "codigo_producto",
+    "moneda",
+    "fecha_constitucion",
+    "fecha_vencimiento",
+    "monto_capital",
+    "tasa_anual",
+    "plazo_dias",
+    "estado"
+  ],
+  "properties": {
+    "id_plazo": {
+      "type": "integer"
+    },
+    "id_cliente": {
+      "type": "integer"
+    },
+    "id_cuenta_acredita": {
+      "type": "integer"
+    },
+    "codigo_producto": {
+      "type": "string"
+    },
+    "moneda": {
+      "type": "string"
+    },
+    "fecha_constitucion": {
+      "type": "string",
+      "format": "date"
+    },
+    "fecha_vencimiento": {
+      "type": "string",
+      "format": "date"
+    },
+    "monto_capital": {
+      "type": "number"
+    },
+    "tasa_anual": {
+      "type": "number"
+    },
+    "plazo_dias": {
+      "type": "integer"
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "vigente",
+        "renovado",
+        "cancelado"
+      ]
+    }
+  }
+}

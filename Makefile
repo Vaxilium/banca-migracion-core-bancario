@@ -24,7 +24,7 @@ datos: entorno
 
 migracion: datos
 	@echo "== Ejecutando ensayos de migracion y carga delta =="
-	$(PY) -m src.migracion.pipeline --todos
+	$(PY) -m src.migracion.pipeline --ensayo todos
 
 conciliacion: migracion
 	@echo "== Ejecutando conciliacion por ensayo =="

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "domicilio_cliente",
+  "type": "object",
+  "required": [
+    "id_domicilio",
+    "id_cliente",
+    "tipo",
+    "pais"
+  ],
+  "properties": {
+    "id_domicilio": {
+      "type": "integer"
+    },
+    "id_cliente": {
+      "type": "integer"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "particular",
+        "laboral"
+      ]
+    },
+    "calle": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "numero": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "piso": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "departamento": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "localidad": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "provincia": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "codigo_postal": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pais": {
+      "type": "string"
+    }
+  }
+}

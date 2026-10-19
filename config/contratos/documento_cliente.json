@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "documento_cliente",
+  "type": "object",
+  "required": [
+    "id_documento",
+    "id_cliente",
+    "tipo_documento",
+    "numero_documento",
+    "pais",
+    "fecha_emision",
+    "fecha_vencimiento",
+    "validado",
+    "vigente",
+    "en_revision"
+  ],
+  "properties": {
+    "id_documento": {
+      "type": "integer"
+    },
+    "id_cliente": {
+      "type": "integer"
+    },
+    "tipo_documento": {
+      "type": "string",
+      "enum": [
+        "DNI",
+        "CI",
+        "PAS"
+      ]
+    },
+    "numero_documento": {
+      "type": "string"
+    },
+    "pais": {
+      "type": "string"
+    },
+    "fecha_emision": {
+      "type": "string",
+      "format": "date"
+    },
+    "fecha_vencimiento": {
+      "type": "string",
+      "format": "date"
+    },
+    "validado": {
+      "type": "boolean"
+    },
+    "vigente": {
+      "type": "boolean"
+    },
+    "en_revision": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "cliente",
+  "type": "object",
+  "required": [
+    "id_cliente",
+    "nombre_completo",
+    "nombre_normalizado",
+    "fecha_nacimiento",
+    "sexo",
+    "estado",
+    "fecha_alta"
+  ],
+  "properties": {
+    "id_cliente": {
+      "type": "integer"
+    },
+    "nombre_completo": {
+      "type": "string"
+    },
+    "nombre_normalizado": {
+      "type": "string"
+    },
+    "fecha_nacimiento": {
+      "type": "string",
+      "format": "date"
+    },
+    "sexo": {
+      "type": "string"
+    },
+    "telefono": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "correo": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "estado": {
+      "type": "string",
+      "enum": [
+        "activo",
+        "inactivo",
+        "bloqueado",
+        "baja"
+      ]
+    },
+    "fecha_alta": {
+      "type": "string",
+      "format": "date"
+    },
+    "observacion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
