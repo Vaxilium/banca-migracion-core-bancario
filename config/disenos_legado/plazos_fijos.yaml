@@ -1,0 +1,19 @@
+entidad: plazos_fijos
+archivo: plazos_fijos.dat
+longitud_registro: 110
+codificacion: latin-1
+descripcion: Depositos a plazo fijo y sus condiciones
+campos:
+  - {nombre: tipo_registro, tipo: texto, inicio: 1, longitud: 1}
+  - {nombre: id_plazo, tipo: entero, inicio: 2, longitud: 10}
+  - {nombre: id_cliente, tipo: entero, inicio: 12, longitud: 8}
+  - {nombre: id_cuenta_acredita, tipo: entero, inicio: 20, longitud: 10}
+  - {nombre: codigo_producto, tipo: texto, inicio: 30, longitud: 2}
+  - {nombre: moneda, tipo: texto, inicio: 32, longitud: 3}
+  - {nombre: fecha_constitucion, tipo: fecha, inicio: 35, longitud: 6}
+  - {nombre: fecha_vencimiento, tipo: fecha, inicio: 41, longitud: 6}
+  - {nombre: monto_capital, tipo: importe, inicio: 47, longitud: 15, decimales: 2}
+  - {nombre: tasa_anual, tipo: importe, inicio: 62, longitud: 7, decimales: 2}
+  - {nombre: plazo_dias, tipo: entero, inicio: 69, longitud: 4}
+  - {nombre: estado_plazo, tipo: texto, inicio: 73, longitud: 1}
+  - {nombre: relleno, tipo: relleno, inicio: 74, longitud: 37, relleno: " "}

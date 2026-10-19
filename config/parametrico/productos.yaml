@@ -1,0 +1,77 @@
+# Catalogo parametrico de productos sinteticos, estados y mapeo contable.
+# Usado por la generacion (fase 4), las reglas (fase 6) y la conciliacion (fase 7).
+
+cuentas:
+  distribucion_extra:
+    CC: 0.35
+    CJ: 0.06
+    CI: 0.04
+    TR: 0.03
+    XX: 0.02
+  monedas:
+    CA: ARS
+    CC: ARS
+    CJ: ARS
+    CI: USD
+    TR: ARS
+    XX: ARS
+  movimientos_medios:
+    CA: 8
+    CC: 20
+    CJ: 5
+    CI: 4
+    TR: 12
+    XX: 2
+
+estados_cuenta:
+  A: 0.80
+  D: 0.10
+  B: 0.04
+  C: 0.05
+  X: 0.01
+
+estados_cliente:
+  A: 0.88
+  I: 0.07
+  B: 0.03
+  D: 0.02
+
+estados_prestamo:
+  VI: 0.85
+  MO: 0.08
+  AT: 0.04
+  CA: 0.03
+
+estados_plazo:
+  V: 0.90
+  R: 0.06
+  C: 0.04
+
+estados_mandato:
+  A: 0.80
+  S: 0.12
+  B: 0.08
+
+servicios_mandato: [SEG, PRE, SER, TEL]
+frecuencias_mandato: [M, S, Q]
+
+tasa_prestamo_min: 25.0
+tasa_prestamo_max: 65.0
+tasa_plazo_min: 30.0
+tasa_plazo_max: 45.0
+plazo_meses_min: 6
+plazo_meses_max: 48
+
+mapeo_contable:
+  CA: "2.1.01"
+  CC: "2.1.02"
+  CJ: "2.1.04"
+  CI: "2.1.05"
+  PF: "2.1.03"
+  PE: "2.1.03"
+  PP: "1.2.01"
+  PH: "1.2.01"
+
+cuenta_caja: "1.1.01"
+cuenta_intereses: "1.2.03"
+cuenta_patrimonio: "3.1.01"

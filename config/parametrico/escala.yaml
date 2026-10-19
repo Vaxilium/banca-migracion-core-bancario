@@ -1,0 +1,40 @@
+# Escalas de generacion de datos sinteticos. Todos los volumenes son deterministas
+# con la semilla global del proyecto (20261019).
+
+fecha_extraccion: 2026-10-09
+fecha_delta: 2026-10-24
+
+escalas:
+  completa:
+    clientes: 60000
+    proporcion_segundo_documento: 0.15
+    cuentas_por_cliente: 1.5
+    movimientos_por_cuenta_media: 12
+    tope_movimientos: 1200000
+    prestamos: 18000
+    plazos_fijos: 8000
+    mandatos: 25000
+    movimientos_delta: 6000
+    cuentas_delta: 120
+  piloto:
+    clientes: 3000
+    proporcion_segundo_documento: 0.15
+    cuentas_por_cliente: 1.5
+    movimientos_por_cuenta_media: 10
+    tope_movimientos: 60000
+    prestamos: 900
+    plazos_fijos: 400
+    mandatos: 1200
+    movimientos_delta: 400
+    cuentas_delta: 20
+  humo:
+    clientes: 400
+    proporcion_segundo_documento: 0.15
+    cuentas_por_cliente: 1.5
+    movimientos_por_cuenta_media: 8
+    tope_movimientos: 8000
+    prestamos: 120
+    plazos_fijos: 60
+    mandatos: 160
+    movimientos_delta: 60
+    cuentas_delta: 6

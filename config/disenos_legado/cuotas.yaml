@@ -1,0 +1,16 @@
+entidad: cuotas
+archivo: cuotas.dat
+longitud_registro: 80
+codificacion: latin-1
+descripcion: Cronogramas de cuotas de prestamos personales
+campos:
+  - {nombre: tipo_registro, tipo: texto, inicio: 1, longitud: 1}
+  - {nombre: id_prestamo, tipo: entero, inicio: 2, longitud: 10}
+  - {nombre: numero_cuota, tipo: entero, inicio: 12, longitud: 3}
+  - {nombre: fecha_vencimiento, tipo: fecha, inicio: 15, longitud: 6}
+  - {nombre: capital, tipo: importe, inicio: 21, longitud: 15, decimales: 2}
+  - {nombre: interes, tipo: importe, inicio: 36, longitud: 15, decimales: 2}
+  - {nombre: total, tipo: importe, inicio: 51, longitud: 15, decimales: 2}
+  - {nombre: estado_cuota, tipo: texto, inicio: 66, longitud: 1}
+  - {nombre: fecha_pago, tipo: fecha, inicio: 67, longitud: 6}
+  - {nombre: relleno, tipo: relleno, inicio: 73, longitud: 8, relleno: " "}

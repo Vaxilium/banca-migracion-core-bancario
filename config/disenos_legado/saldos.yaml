@@ -1,0 +1,13 @@
+entidad: saldos
+archivo: saldos.dat
+longitud_registro: 60
+codificacion: latin-1
+descripcion: Saldos de apertura y finales por cuenta (importes con signo final)
+campos:
+  - {nombre: tipo_registro, tipo: texto, inicio: 1, longitud: 1}
+  - {nombre: id_cuenta, tipo: entero, inicio: 2, longitud: 10}
+  - {nombre: moneda, tipo: texto, inicio: 12, longitud: 3}
+  - {nombre: saldo_apertura, tipo: importe, inicio: 15, longitud: 15, decimales: 2}
+  - {nombre: saldo_final, tipo: importe, inicio: 30, longitud: 15, decimales: 2}
+  - {nombre: fecha_saldo, tipo: fecha, inicio: 45, longitud: 6}
+  - {nombre: relleno, tipo: relleno, inicio: 51, longitud: 10, relleno: "0"}

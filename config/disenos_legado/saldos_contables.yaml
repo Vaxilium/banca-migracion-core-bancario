@@ -1,0 +1,13 @@
+entidad: saldos_contables
+archivo: saldos_contables.dat
+longitud_registro: 70
+codificacion: latin-1
+descripcion: Saldos del libro mayor por cuenta contable al cierre del periodo
+campos:
+  - {nombre: tipo_registro, tipo: texto, inicio: 1, longitud: 1}
+  - {nombre: codigo_contable, tipo: texto, inicio: 2, longitud: 10}
+  - {nombre: periodo, tipo: fecha, inicio: 12, longitud: 6}
+  - {nombre: saldo_debe, tipo: importe, inicio: 18, longitud: 15, decimales: 2}
+  - {nombre: saldo_haber, tipo: importe, inicio: 33, longitud: 15, decimales: 2}
+  - {nombre: saldo_final, tipo: importe, inicio: 48, longitud: 15, decimales: 2}
+  - {nombre: relleno, tipo: relleno, inicio: 63, longitud: 8, relleno: "0"}

@@ -1,0 +1,14 @@
+entidad: plan_cuentas
+archivo: plan_cuentas.dat
+longitud_registro: 90
+codificacion: latin-1
+descripcion: Plan de cuentas contable del legado (estructura jerarquica)
+campos:
+  - {nombre: tipo_registro, tipo: texto, inicio: 1, longitud: 1}
+  - {nombre: codigo_contable, tipo: texto, inicio: 2, longitud: 10}
+  - {nombre: nombre_cuenta, tipo: texto, inicio: 12, longitud: 50}
+  - {nombre: tipo_cuenta, tipo: texto, inicio: 62, longitud: 1}
+  - {nombre: nivel, tipo: entero, inicio: 63, longitud: 1}
+  - {nombre: cuenta_padre, tipo: texto, inicio: 64, longitud: 10}
+  - {nombre: moneda, tipo: texto, inicio: 74, longitud: 3}
+  - {nombre: relleno, tipo: relleno, inicio: 77, longitud: 14, relleno: " "}

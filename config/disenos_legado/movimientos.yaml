@@ -1,0 +1,18 @@
+entidad: movimientos
+archivo: movimientos.dat
+longitud_registro: 90
+codificacion: latin-1
+descripcion: Movimientos historicos de los ultimos 12 meses (importe con signo final)
+campos:
+  - {nombre: tipo_registro, tipo: texto, inicio: 1, longitud: 1}
+  - {nombre: id_movimiento, tipo: entero, inicio: 2, longitud: 12}
+  - {nombre: id_cuenta, tipo: entero, inicio: 14, longitud: 10}
+  - {nombre: fecha_movimiento, tipo: fecha, inicio: 24, longitud: 6}
+  - {nombre: hora_movimiento, tipo: hora, inicio: 30, longitud: 4}
+  - {nombre: codigo_operacion, tipo: texto, inicio: 34, longitud: 2}
+  - {nombre: canal, tipo: texto, inicio: 36, longitud: 2}
+  - {nombre: importe, tipo: importe, inicio: 38, longitud: 15, decimales: 2}
+  - {nombre: saldo_despues, tipo: importe, inicio: 53, longitud: 15, decimales: 2}
+  - {nombre: numero_comprobante, tipo: entero, inicio: 68, longitud: 10}
+  - {nombre: descripcion, tipo: texto, inicio: 78, longitud: 10}
+  - {nombre: sucursal, tipo: entero, inicio: 88, longitud: 3}
