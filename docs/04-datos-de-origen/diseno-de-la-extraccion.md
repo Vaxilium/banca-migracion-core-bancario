@@ -129,10 +129,10 @@ y reversa (fase 9):
 | Archivo delta | Registros | Contenido |
 |---|---:|---|
 | `cuentas_delta.dat` | 120 | Altas de cuentas del día de corte. |
-| `movimientos_delta.dat` | 11.280 | Movimientos del día (incluye el depósito de apertura de las altas). |
+| `movimientos_delta.dat` | 11.282 | Movimientos del día (incluye el depósito de apertura de las altas). |
 | `saldos_delta.dat` | 5.220 | Saldos actualizados de las cuentas afectadas. |
 
-**Fechas del proceso:** extracción base del **09/10/2026**, carga delta del **24/10/2026**. Generación completa en 40,9 segundos.
+**Fechas del proceso:** extracción base del **09/10/2026**, carga delta del **24/10/2026**. Generación completa en 40,0 segundos.
 <!-- FIN AUTO: carga-delta -->
 
 ## Uso en las etapas siguientes
