@@ -10,4 +10,6 @@ testpaths = ["pruebas"]
 addopts = "-ra"
 markers = [
     "lento: pruebas de mayor duracion (pipeline completo reducido)",
+    "integracion: pruebas sobre artefactos generados por el pipeline",
+    "escenario: escenario Gherkin cubierto por la prueba",
 ]
