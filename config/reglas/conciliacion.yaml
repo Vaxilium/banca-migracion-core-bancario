@@ -1,0 +1,9 @@
+# Tolerancias de conciliacion aprobadas por Contabilidad (RNF-015). Ajustar un
+# valor no requiere tocar codigo; la tolerancia monetaria coincide con la regla
+# tolerancia_conciliacion definida en reglas_v1.yaml, reglas_v2.yaml y reglas_v3.yaml.
+
+tolerancias:
+  monetaria: 0.01
+  ajuste_automatico: 100.0
+
+contrapartida_ajustes: "3.3.01"
