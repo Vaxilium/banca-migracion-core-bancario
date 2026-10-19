@@ -110,6 +110,29 @@ class Inyector:
             )
         return df
 
+    def documentos(self, df: pd.DataFrame, fecha_extraccion: date) -> pd.DataFrame:
+        """Documentos vencidos que siguen marcados como validados (vencido sin marcar)."""
+        df = df.copy()
+        vencimiento = df["fecha_vencimiento"].astype(str)
+        expirado = np.array(
+            [
+                (v.isdigit() and v != "000000" and fecha_desde_aammdd(v) < fecha_extraccion)
+                for v in vencimiento
+            ]
+        )
+        candidatas = df.index[expirado & (df["validado"] == "N")]
+        indices = self._elegir_indices(
+            len(candidatas), self.tasas["documentos"]["vencido_sin_marcar"]
+        )
+        for indice in candidatas[indices]:
+            df.at[indice, "validado"] = "S"
+            self._registrar(
+                "documentos", "vencido_sin_marcar", df.at[indice, "numero_documento"],
+                f"id_cliente={df.at[indice, 'id_cliente']} "
+                f"vencimiento={df.at[indice, 'fecha_vencimiento']}",
+            )
+        return df
+
     def direcciones(self, df: pd.DataFrame) -> pd.DataFrame:
         """Direcciones incompletas: sin localidad, sin provincia o sin codigo postal."""
         df = df.copy()

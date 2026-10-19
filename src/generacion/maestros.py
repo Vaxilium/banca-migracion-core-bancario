@@ -5,7 +5,7 @@ from datetime import date, timedelta
 import numpy as np
 import pandas as pd
 
-from src.comun.fechas import aammdd_desde_fecha
+from src.comun.fechas import aammdd_desde_fecha, fecha_desde_aammdd
 from src.comun.textos import normalizar_texto
 from src.comun.validaciones import digito_verificador_dni
 from src.generacion.pools import (
@@ -118,7 +118,10 @@ def generar_clientes(cantidad: int, rng: np.random.Generator) -> pd.DataFrame:
 
 
 def generar_documentos(
-    clientes: pd.DataFrame, proporcion_segundo: float, rng: np.random.Generator
+    clientes: pd.DataFrame,
+    proporcion_segundo: float,
+    rng: np.random.Generator,
+    fecha_extraccion: date,
 ) -> pd.DataFrame:
     """Genera los documentos declarados por cliente (algunos con segundo documento)."""
     base = clientes[["id_cliente", "tipo_documento", "numero_documento"]].copy()
@@ -132,7 +135,11 @@ def generar_documentos(
         aammdd_desde_fecha(f + timedelta(days=365 * int(v)))
         for f, v in zip(emision, anios_vigencia, strict=False)
     ]
-    base["validado"] = np.where(rng.random(len(base)) < 0.92, "S", "N")
+    expirado = np.array(
+        [fecha_desde_aammdd(v) < fecha_extraccion for v in base["fecha_vencimiento"]]
+    )
+    validado = np.where(rng.random(len(base)) < 0.92, "S", "N")
+    base["validado"] = np.where(expirado, "N", validado)
     segundo = base.sample(frac=proporcion_segundo, random_state=11).copy()
     segundo["tipo_documento"] = "PAS"
     letras = np.array(list("ABCDEFGHJKLMNPQRSTUVWXYZ"))

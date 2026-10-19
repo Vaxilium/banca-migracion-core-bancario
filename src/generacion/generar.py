@@ -51,7 +51,7 @@ def generar(escala: str) -> dict:
     clientes = maestros.generar_clientes(config["clientes"], rng)
     direcciones = maestros.generar_direcciones(clientes, rng)
     documentos = maestros.generar_documentos(
-        clientes, config["proporcion_segundo_documento"], rng
+        clientes, config["proporcion_segundo_documento"], rng, fecha_extraccion
     )
     cuentas = mod_cuentas.generar_cuentas(
         clientes, config_productos, rng, config["cuentas_por_cliente"], fecha_extraccion
@@ -81,6 +81,7 @@ def generar(escala: str) -> dict:
 
     inyector = mod_defectos.Inyector(rng, tasas_defectos)
     clientes = inyector.clientes(clientes)
+    documentos = inyector.documentos(documentos, fecha_extraccion)
     direcciones = inyector.direcciones(direcciones)
     cuentas = inyector.cuentas(cuentas)
     movimientos = inyector.movimientos(movimientos)
