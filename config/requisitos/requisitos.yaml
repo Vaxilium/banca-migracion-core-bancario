@@ -1,0 +1,562 @@
+# Requisitos funcionales (RF) y no funcionales (RNF) derivados del analisis de
+# brechas. Las tablas de docs/03-analisis-de-brechas/requisitos.md se generan con
+# `src/informes/brechas.py`. La trazabilidad requisito -> brecha -> mapeo -> regla
+# -> caso -> defecto -> evidencia se verifica en la fase 12.
+
+funcionales:
+  - id: RF-001
+    titulo: Deduplicacion de clientes al migrar
+    descripcion: >-
+      El pipeline debe detectar clientes duplicados por documento o por similitud
+      de nombre normalizado y cargar un unico cliente superviviente, preservando
+      las referencias de cuentas.
+    criterio_aceptacion: >-
+      Toda cuenta del origen referencia un cliente unico en el destino y el conteo
+      de clientes del destino coincide con el esperado tras la deduplicacion.
+    capacidad: CAP-01
+    prioridad: Must
+  - id: RF-002
+    titulo: Validacion de documentos de identidad
+    descripcion: >-
+      El pipeline debe validar formato y digito verificador de los documentos; los
+      invalidos se rechazan con motivo y quedan para revision manual.
+    criterio_aceptacion: >-
+      El 100 por ciento de los documentos cargados supera la validacion y todo
+      rechazo tiene motivo registrado en la bitacora.
+    capacidad: CAP-01
+    prioridad: Must
+  - id: RF-003
+    titulo: Exclusion de titulares fallecidos
+    descripcion: >-
+      Los clientes en estado fallecido no se cargan al destino; se listan para el
+      proceso de sucesion.
+    criterio_aceptacion: >-
+      Cero clientes fallecidos en el destino y listado completo de exclusiones
+      disponible para Operaciones.
+    capacidad: CAP-01
+    prioridad: Must
+  - id: RF-004
+    titulo: Contacto ampliado obligatorio
+    descripcion: >-
+      El cliente migrado requiere telefono y correo con formato valido; el faltante
+      se completa desde texto libre o queda marcado como pendiente.
+    criterio_aceptacion: >-
+      Al menos el 99 por ciento de los clientes migrados posee correo valido o
+      marca de pendiente con intento de completado.
+    capacidad: CAP-01
+    prioridad: Must
+  - id: RF-005
+    titulo: Control de vigencia documental
+    descripcion: >-
+      El destino registra fecha de vencimiento de documentos y los marca vencidos
+      para bloqueo operativo configurable.
+    criterio_aceptacion: >-
+      Todo documento migrado con vencimiento informado queda marcado segun su
+      estado de vigencia a la fecha de corte.
+    capacidad: CAP-02
+    prioridad: Should
+  - id: RF-006
+    titulo: Rechazo de documentos repetidos
+    descripcion: >-
+      Documentos identicos en clientes distintos se rechazan y se derivan a
+      cumplimiento con evidencia.
+    criterio_aceptacion: >-
+      Ningun documento duplicado entre clientes distintos queda cargado sin
+      investigacion registrada.
+    capacidad: CAP-02
+    prioridad: Should
+  - id: RF-007
+    titulo: Normalizacion de direcciones
+    descripcion: >-
+      Las direcciones se normalizan a un catalogo de localidades y provincias; lo
+      incompleto se completa con valor por defecto y marca de revision.
+    criterio_aceptacion: >-
+      El 100 por ciento de las direcciones cargadas tiene localidad y provincia
+      validas o marca de revision.
+    capacidad: CAP-03
+    prioridad: Must
+  - id: RF-008
+    titulo: Extraccion de datos desde texto libre
+    descripcion: >-
+      Se extraen telefonos, correos y direcciones reconocibles del campo de
+      observaciones sobrecargado, conservando el texto original.
+    criterio_aceptacion: >-
+      Todo patron reconocible queda extraido a su campo y el texto original se
+      conserva integro en el destino.
+    capacidad: CAP-03
+    prioridad: Should
+  - id: RF-009
+    titulo: Parametros de producto configurables
+    descripcion: >-
+      Tasas, limites y comisiones se cargan como parametros versionados del
+      producto, no como constantes.
+    criterio_aceptacion: >-
+      Un cambio de parametro se aplica sin despliegue de codigo y queda auditado.
+    capacidad: CAP-04
+    prioridad: Must
+  - id: RF-010
+    titulo: Cola de revision para estados desconocidos
+    descripcion: >-
+      Cuentas con estado legado desconocido pasan a una cola de revision con
+      decision obligatoria antes del corte.
+    criterio_aceptacion: >-
+      El 100 por ciento de los estados desconocidos tiene decision registrada y el
+      destino no contiene estados invalidos.
+    capacidad: CAP-04
+    prioridad: Must
+  - id: RF-011
+    titulo: Descubierto y comisiones como condiciones de cuenta
+    descripcion: >-
+      Limite de descubierto y comision mensual se migran como condiciones de la
+      cuenta corriente.
+    criterio_aceptacion: >-
+      Toda cuenta corriente migrada posee condiciones de descubierto y comision
+      segun su contrato de origen.
+    capacidad: CAP-05
+    prioridad: Must
+  - id: RF-012
+    titulo: Impuesto sobre debitos y creditos
+    descripcion: >-
+      El destino calcula y registra el impuesto sobre movimientos de cuenta
+      corriente segun parametro vigente.
+    criterio_aceptacion: >-
+      Los movimientos gravados del periodo tienen su impuesto registrado y la
+      suma concilia con la cuenta contable correspondiente.
+    capacidad: CAP-05
+    prioridad: Must
+  - id: RF-013
+    titulo: Renovacion automatica de plazos fijos
+    descripcion: >-
+      El plazo fijo se renueva automaticamente al vencimiento segun condicion del
+      contrato, con opcion de cancelacion.
+    criterio_aceptacion: >-
+      Todo plazo fijo vigente migrado define su comportamiento de vencimiento y
+      ninguno se renueva sin condicion informada.
+    capacidad: CAP-06
+    prioridad: Should
+  - id: RF-014
+    titulo: Cancelacion anticipada con prorrateo
+    descripcion: >-
+      La cancelacion anticipada calcula intereses devengados y tasa de
+      precancelacion segun parametro.
+    criterio_aceptacion: >-
+      El importe de cancelacion coincide con el calculo parametrizado y queda
+      registrado el detalle del prorrateo.
+    capacidad: CAP-06
+    prioridad: Should
+  - id: RF-015
+    titulo: Cronogramas de cuotas consistentes
+    descripcion: >-
+      Los cronogramas migrados discriminan capital, interes y seguros, y el saldo
+      de capital del prestamo equivale a la suma de capitales pendientes.
+    criterio_aceptacion: >-
+      Todo prestamo migrado cumple la ecuacion saldo de capital igual a suma de
+      cuotas pendientes dentro de la tolerancia definida.
+    capacidad: CAP-07
+    prioridad: Must
+  - id: RF-016
+    titulo: Mora y refinanciacion
+    descripcion: >-
+      El destino calcula mora diaria y permite refinanciar un prestamo generando
+      nuevo cronograma y cancelando el anterior.
+    criterio_aceptacion: >-
+      Los prestamos en mora migrados reflejan cuotas vencidas correctas y una
+      refinanciacion de prueba genera cronograma consistente.
+    capacidad: CAP-07
+    prioridad: Must
+  - id: RF-017
+    titulo: Exclusion de prestamos hipotecarios
+    descripcion: >-
+      Los prestamos hipotecarios de la extraccion no se migran; se registran como
+      fuera de alcance.
+    criterio_aceptacion: >-
+      Cero prestamos hipotecarios cargados y listado de exclusiones informado al
+      area de creditos.
+    capacidad: CAP-07
+    prioridad: Must
+  - id: RF-018
+    titulo: Gestion de tarjetas de debito en linea
+    descripcion: >-
+      Emision, reposicion y bloqueo de tarjetas se integran con el procesador sin
+      esperar el lote nocturno.
+    criterio_aceptacion: >-
+      Un alta o bloqueo de prueba se refleja en el procesador dentro de los 5
+      minutos posteriores al evento.
+    capacidad: CAP-08
+    prioridad: Must
+  - id: RF-019
+    titulo: Tarjeta de debito asociada a cuenta
+    descripcion: >-
+      La tarjeta migrada conserva su asociacion a la cuenta con estado, numero
+      enmascarado y fecha de emision.
+    criterio_aceptacion: >-
+      Toda tarjeta migrada referencia una cuenta valida y su estado corresponde al
+      origen.
+    capacidad: CAP-08
+    prioridad: Must
+  - id: RF-020
+    titulo: Mandatos de debito automatico operativos
+    descripcion: >-
+      Los mandatos activos migran con servicio, cuenta, tope, frecuencia y firma;
+      los suspendidos y dados de baja se migran como historico.
+    criterio_aceptacion: >-
+      El 100 por ciento de los mandatos activos ejecuta su debito del periodo de
+      prueba segun condicion.
+    capacidad: CAP-09
+    prioridad: Must
+  - id: RF-021
+    titulo: Transferencias por servicio
+    descripcion: >-
+      Las transferencias se ejecutan por servicio del core nuevo con validacion de
+      saldo, limites y registro de la operacion.
+    criterio_aceptacion: >-
+      Una transferencia de prueba descuenta y acredita de forma atomica y genera
+      movimiento y asiento.
+    capacidad: CAP-09
+    prioridad: Must
+  - id: RF-022
+    titulo: Plan de cuentas y matriz producto-contabilidad
+    descripcion: >-
+      El plan de cuentas migra completo y cada producto tiene definida su cuenta
+      contable principal y su contrapartida.
+    criterio_aceptacion: >-
+      Todo saldo de producto tiene cuenta contable asignada y la matriz esta
+      aprobada por Contabilidad.
+    capacidad: CAP-10
+    prioridad: Must
+  - id: RF-023
+    titulo: Asientos automaticos por evento
+    descripcion: >-
+      Los eventos de negocio generan asientos balanceados con referencia al
+      documento de origen.
+    criterio_aceptacion: >-
+      Todo asiento de los casos de prueba esta balanceado y referenciado a su
+      operacion de origen.
+    capacidad: CAP-10
+    prioridad: Must
+  - id: RF-024
+    titulo: Conciliacion contable automatizada
+    descripcion: >-
+      El pipeline compara, por cuenta contable, la suma de saldos de producto
+      contra el mayor migrado y reporta diferencias con causa raiz.
+    criterio_aceptacion: >-
+      El informe de conciliacion presenta el 100 por ciento de las cuentas
+      conciliadas de forma directa o con ajuste evidenciado.
+    capacidad: CAP-10
+    prioridad: Must
+  - id: RF-025
+    titulo: Intereses diarios de cajas de ahorro
+    descripcion: >-
+      El core nuevo causa intereses diarios sobre saldos de caja de ahorro y los
+      capitaliza segun condicion del producto.
+    criterio_aceptacion: >-
+      El interes de un periodo de prueba coincide con recalculo independiente
+      dentro de la tolerancia de un centavo por cuenta.
+    capacidad: CAP-11
+    prioridad: Must
+  - id: RF-026
+    titulo: Comisiones configurables y reversibles
+    descripcion: >-
+      Las comisiones se aplican por parametro de producto y su reversion requiere
+      autorizacion de segundo nivel.
+    criterio_aceptacion: >-
+      Una reversion de prueba exige dos usuarios y deja pista de auditoria con
+      valores anteriores y posteriores.
+    capacidad: CAP-11
+    prioridad: Must
+  - id: RF-027
+    titulo: Reportes regulatorios desde el modelo destino
+    descripcion: >-
+      Los reportes periodicos se generan desde el modelo relacional del core
+      nuevo, con validaciones de calidad previas.
+    criterio_aceptacion: >-
+      El reporte de prueba cuadra con los saldos conciliados del ensayo y no
+      requiere ajustes manuales.
+    capacidad: CAP-12
+    prioridad: Must
+  - id: RF-028
+    titulo: Trazabilidad de la informacion migrada
+    descripcion: >-
+      Cada registro migrado conserva identificador de origen, version de reglas y
+      fecha de carga.
+    criterio_aceptacion: >-
+      Es posible reconstruir el origen de cualquier registro del destino a partir
+      de los identificadores de migracion.
+    capacidad: CAP-12
+    prioridad: Must
+  - id: RF-029
+    titulo: Extractos y consultas en linea
+    descripcion: >-
+      Los extractos se generan desde el core nuevo con el historial migrado y las
+      consultas responden en linea.
+    criterio_aceptacion: >-
+      El extracto de un cliente de prueba incluye los movimientos migrados de los
+      ultimos 12 meses sin diferencias con el origen.
+    capacidad: CAP-13
+    prioridad: Should
+  - id: RF-030
+    titulo: Migracion de historial de movimientos
+    descripcion: >-
+      Se migran los movimientos de los ultimos 12 meses con conteos y sumas de
+      control por cuenta y por periodo.
+    criterio_aceptacion: >-
+      Conteo y suma de importes de movimientos del destino igualan al origen
+      dentro de la tolerancia y toda exclusion esta justificada.
+    capacidad: CAP-13
+    prioridad: Must
+  - id: RF-031
+    titulo: Reintentos programables de cobro
+    descripcion: >-
+      El core nuevo reintenta debitos fallidos segun calendario de cobranza
+      configurado por producto.
+    criterio_aceptacion: >-
+      Un debito fallido de prueba se reintenta los dias configurados y el exito
+      detiene los reintentos.
+    capacidad: CAP-14
+    prioridad: Should
+  - id: RF-032
+    titulo: Avisos de mora multicanal
+    descripcion: >-
+      Los avisos de mora se envian por correo y celular desde eventos del core.
+    criterio_aceptacion: >-
+      Una cuota vencida de prueba genera los avisos configurados en el canal
+      correcto.
+    capacidad: CAP-14
+    prioridad: Could
+  - id: RF-033
+    titulo: Pista de auditoria completa
+    descripcion: >-
+      Toda operacion registra usuario, canal, fecha, valores previos y posteriores.
+    criterio_aceptacion: >-
+      La pista de la operacion de prueba permite reconstruir el cambio completo y
+      no admite edicion.
+    capacidad: CAP-15
+    prioridad: Must
+  - id: RF-034
+    titulo: Segregacion de funciones
+    descripcion: >-
+      Los perfiles limitan funciones criticas; acciones sensibles requieren doble
+      autorizacion.
+    criterio_aceptacion: >-
+      Un usuario unico no puede ejecutar y autorizar la misma operacion critica.
+    capacidad: CAP-15
+    prioridad: Must
+  - id: RF-036
+    titulo: Conciliacion de saldos por cuenta
+    descripcion: >-
+      El pipeline valida por cuenta que saldo final igual a saldo de apertura mas
+      movimientos, con tolerancia parametrica.
+    criterio_aceptacion: >-
+      Toda cuenta del destino cumple la ecuacion dentro de tolerancia o tiene
+      ajuste registrado con evidencia.
+    capacidad: TRV
+    prioridad: Must
+  - id: RF-037
+    titulo: Bitacora de ejecucion del pipeline
+    descripcion: >-
+      Cada ejecucion registra conteos por etapa, tiempos, rechazos y version de
+      reglas aplicada.
+    criterio_aceptacion: >-
+      La bitacora permite reconstruir que reglas produjeron cada resultado del
+      ensayo.
+    capacidad: TRV
+    prioridad: Must
+  - id: RF-038
+    titulo: Intercambio controlado con satelites
+    descripcion: >-
+      Mientras los satelites no se integren por servicio, los archivos de
+      intercambio llevan conteo y suma de control obligatorios.
+    criterio_aceptacion: >-
+      Ningun archivo de satelite se procesa sin cuadre de conteo y suma.
+    capacidad: TRV
+    prioridad: Should
+  - id: RF-039
+    titulo: Rechazo controlado de productos fuera de alcance
+    descripcion: >-
+      Los productos de rubros excluidos se rechazan con motivo fuera_de_alcance y
+      se informan al area responsable.
+    criterio_aceptacion: >-
+      Cero productos fuera de alcance cargados al destino y reporte de rechazos
+      disponible.
+    capacidad: TRV
+    prioridad: Must
+  - id: RF-040
+    titulo: Mapeo de tipos de firma y condiciones
+    descripcion: >-
+      Los tipos de firma legados se mapean a condiciones del destino o se derivan
+      a revision manual.
+    criterio_aceptacion: >-
+      Toda cuenta migrada declara su condicion de firma o su derivacion a
+      revision.
+    capacidad: TRV
+    prioridad: Could
+  - id: RF-041
+    titulo: Operatoria de caja cubierta
+    descripcion: >-
+      Depositos y extracciones por ventanilla operan sobre el core nuevo con
+      limites parametrizados.
+    criterio_aceptacion: >-
+      La operacion de caja de prueba se registra con asiento y movimiento
+      asociados.
+    capacidad: TRV
+    prioridad: Must
+  - id: RF-042
+    titulo: Consulta de saldos por servicio
+    descripcion: >-
+      Los canales obtienen saldos y movimientos por servicio del core, sin
+      archivos de posiciones.
+    criterio_aceptacion: >-
+      La consulta de un cliente de prueba devuelve el mismo saldo conciliado del
+      ensayo.
+    capacidad: TRV
+    prioridad: Must
+
+no_funcionales:
+  - id: RNF-001
+    titulo: Rendimiento de la carga completa
+    descripcion: >-
+      La carga completa de todas las entidades debe completarse en menos de 4
+      horas sobre la infraestructura objetivo.
+    criterio_aceptacion: >-
+      El ensayo general registra una duracion menor a 4 horas y el equipo de
+      operaciones puede monitorearla en linea.
+    categoria: rendimiento
+    prioridad: Must
+  - id: RNF-002
+    titulo: Disponibilidad del core nuevo
+    descripcion: >-
+      El core nuevo debe alcanzar un 99,9 por ciento de disponibilidad mensual
+      percibida por canales en regimen.
+    criterio_aceptacion: >-
+      El tablero de hypercare no registra caidas superiores a la meta durante los
+      30 dias posteriores al corte.
+    categoria: disponibilidad
+    prioridad: Must
+  - id: RNF-003
+    titulo: Enmascaramiento de datos personales
+    descripcion: >-
+      Los entornos no productivos y las muestras publicadas usan datos personales
+      seudoanonimizados de forma determinista.
+    criterio_aceptacion: >-
+      Ninguna muestra publicada contiene documento, nombre, telefono, correo ni
+      direccion reales (aun siendo sinteticos, se aplica el control).
+    categoria: seguridad
+    prioridad: Must
+  - id: RNF-004
+    titulo: Auditabilidad del pipeline
+    descripcion: >-
+      Toda ejecucion del pipeline deja bitacora inmutable con versiones de reglas
+      y resultados por entidad.
+    criterio_aceptacion: >-
+      La bitacora del repositorio permite reconstruir cada ensayo sin acceso a los
+      datos originales.
+    categoria: auditoria
+    prioridad: Must
+  - id: RNF-005
+    titulo: Integridad con sumas de control
+    descripcion: >-
+      Ninguna carga se declara exitosa sin cuadre de conteo y suma de control
+      contra el origen.
+    criterio_aceptacion: >-
+      El pipeline detiene la carga de una entidad si su suma de control no
+      cuadra fuera de tolerancia.
+    categoria: integridad
+    prioridad: Must
+  - id: RNF-006
+    titulo: Usabilidad en sucursales
+    descripcion: >-
+      Las pantallas y flujos de caja deben reducir o igualar el tiempo de
+      operacion actual por transaccion.
+    criterio_aceptacion: >-
+      Los usuarios de UAT completan las tareas criticas en tiempo igual o menor
+      al sistema legado.
+    categoria: usabilidad
+    prioridad: Should
+  - id: RNF-007
+    titulo: Mantenibilidad de reglas
+    descripcion: >-
+      Las reglas de transformacion son datos versionados, no codigo embebido.
+    criterio_aceptacion: >-
+      Una nueva version de reglas se publica sin recompilar y se puede revertir a
+      la version anterior.
+    categoria: mantenibilidad
+    prioridad: Must
+  - id: RNF-008
+    titulo: Escalabilidad
+    descripcion: >-
+      El modelo destino soporta un crecimiento anual del 30 por ciento en cuentas
+      y movimientos sin rediseno.
+    criterio_aceptacion: >-
+      La prueba de rendimiento con volumen ampliado mantiene los tiempos dentro
+      de la ventana de carga.
+    categoria: rendimiento
+    prioridad: Should
+  - id: RNF-009
+    titulo: Volumen de archivos
+    descripcion: >-
+      El pipeline procesa archivos de hasta 2 GB por entidad sin acumular todo en
+      memoria.
+    criterio_aceptacion: >-
+      La extraccion se ejecuta de forma fragmentada y el pico de memoria se
+      mantiene bajo el limite del ambiente.
+    categoria: rendimiento
+    prioridad: Should
+  - id: RNF-010
+    titulo: Objetivos de recuperacion
+    descripcion: >-
+      Ante una falla critica posterior al corte, el RTO objetivo es de 4 horas y
+      el RPO de 15 minutos.
+    criterio_aceptacion: >-
+      El simulacro de recuperacion restablece la operacion dentro de los tiempos
+      objetivo con perdida de datos dentro del RPO.
+    categoria: continuidad
+    prioridad: Must
+  - id: RNF-011
+    titulo: Observabilidad del pipeline
+    descripcion: >-
+      Cada etapa publica metricas de filas, tiempos y errores consultables por
+      operaciones.
+    criterio_aceptacion: >-
+      La bitacora y el tablero exponen el estado de cada etapa en cada ensayo.
+    categoria: operacion
+    prioridad: Should
+  - id: RNF-012
+    titulo: Retencion de informacion
+    descripcion: >-
+      La informacion de la migracion (reglas, bitacoras, conciliaciones) se
+      conserva segun la politica de retencion vigente del banco (ilustrativa).
+    criterio_aceptacion: >-
+      Los artefactos de migracion quedan archivados en el repositorio y en el
+      archivo documental con control de versiones.
+    categoria: cumplimiento
+    prioridad: Must
+  - id: RNF-013
+    titulo: Idioma y terminologia
+    descripcion: >-
+      Documentacion, mensajes y nombres de objetos de negocio en espanol neutro
+      latinoamericano, con glosario unico.
+    criterio_aceptacion: >-
+      Todo artefacto publicado respeta el glosario y no contiene textos en otro
+      idioma salvo nombres propios de herramientas.
+    categoria: documentacion
+    prioridad: Must
+  - id: RNF-014
+    titulo: Reproducibilidad total
+    descripcion: >-
+      Todo el proyecto se regenera con semilla fija mediante `make todo` sin
+      intervencion manual.
+    criterio_aceptacion: >-
+      Dos ejecuciones consecutivas producen resultados identicos verificables por
+      las pruebas de determinismo.
+    categoria: reproducibilidad
+    prioridad: Must
+  - id: RNF-015
+    titulo: Tolerancias de conciliacion configurables
+    descripcion: >-
+      Las tolerancias por entidad y regla son parametros aprobados por
+      Contabilidad, no valores de codigo.
+    criterio_aceptacion: >-
+      Ajustar una tolerancia no requiere tocar codigo y el cambio queda auditado
+      en el repositorio.
+    categoria: integridad
+    prioridad: Must

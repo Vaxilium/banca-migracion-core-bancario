@@ -1,0 +1,597 @@
+# Matriz de brechas funcionales: capacidades del legado frente al core nuevo.
+# La matriz CSV/Excel y la tabla del documento se generan automaticamente en
+# `src/informes/brechas.py`. Tipos: cubierta, configuracion, desarrollo,
+# proceso_manual, descontinuar. Prioridad: Must, Should, Could, Won't.
+
+capacidades:
+  CAP-01: Gestion de clientes
+  CAP-02: Gestion documental
+  CAP-03: Gestion de direcciones
+  CAP-04: Cajas de ahorro
+  CAP-05: Cuentas corrientes
+  CAP-06: Plazos fijos
+  CAP-07: Prestamos personales
+  CAP-08: Tarjetas de debito
+  CAP-09: Medios de pago
+  CAP-10: Contabilidad de productos
+  CAP-11: Intereses y comisiones
+  CAP-12: Reportes regulatorios
+  CAP-13: Consultas y extractos
+  CAP-14: Cobranzas y mora
+  CAP-15: Seguridad y accesos
+  TRV: Transversal
+
+brechas:
+  - id: BR-001
+    capacidad: CAP-01
+    titulo: Deduplicacion de clientes por similitud de nombre y documento
+    tipo: desarrollo
+    descripcion: >-
+      El legado compara nombres exactos; el core nuevo exige clave unica de persona.
+      Se requiere normalizar nombres, agrupar candidatos y definir superviviente.
+    esfuerzo: M
+    riesgo: alto
+    prioridad: Must
+    responsable: Datos y Sistemas
+    requisitos: [RF-001, RF-002]
+    puntos_dolor: [PD-01, PD-05]
+  - id: BR-002
+    capacidad: CAP-01
+    titulo: Validacion de documentos con digito verificador
+    tipo: desarrollo
+    descripcion: >-
+      El legado acepta documentos sin validacion formal. El destino exige formato
+      valido y unicidad; los invalidos pasan a revision manual.
+    esfuerzo: M
+    riesgo: alto
+    prioridad: Must
+    responsable: Datos y Cumplimiento
+    requisitos: [RF-002]
+    puntos_dolor: [PD-05]
+  - id: BR-003
+    capacidad: CAP-01
+    titulo: Exclusion de titulares fallecidos con proceso de sucesion
+    tipo: proceso_manual
+    descripcion: >-
+      Los clientes en estado D no se migran automaticamente; Operaciones gestiona
+      la sucesion y el alta posterior del sucesor.
+    esfuerzo: S
+    riesgo: medio
+    prioridad: Must
+    responsable: Operaciones
+    requisitos: [RF-003]
+    puntos_dolor: []
+  - id: BR-004
+    capacidad: CAP-01
+    titulo: Contacto ampliado (correo y celular) obligatorio y validado
+    tipo: configuracion
+    descripcion: >-
+      El destino requiere correo y celular con formato valido para notificaciones;
+      se completa lo faltante con lo disponible en texto libre y en sucursal.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Must
+    responsable: Producto y Datos
+    requisitos: [RF-004]
+    puntos_dolor: [PD-09]
+  - id: BR-005
+    capacidad: CAP-02
+    titulo: Vigencia y vencimiento de documentos con alertas
+    tipo: desarrollo
+    descripcion: >-
+      El core nuevo controla vencimiento de documentos y bloquea operaciones si
+      estan vencidos; el legado no lo verifica.
+    esfuerzo: M
+    riesgo: medio
+    prioridad: Should
+    responsable: Sistemas
+    requisitos: [RF-005]
+    puntos_dolor: [PD-05]
+  - id: BR-006
+    capacidad: CAP-02
+    titulo: Documentos repetidos entre clientes distintos
+    tipo: proceso_manual
+    descripcion: >-
+      Documentos duplicados entre clientes se rechazan y se derivan a cumplimiento
+      para investigacion de posible fraude o error de carga.
+    esfuerzo: S
+    riesgo: alto
+    prioridad: Should
+    responsable: Cumplimiento
+    requisitos: [RF-006]
+    puntos_dolor: [PD-01]
+  - id: BR-007
+    capacidad: CAP-03
+    titulo: Normalizacion de direcciones incompletas
+    tipo: desarrollo
+    descripcion: >-
+      El destino exige localidad y provincia validas; el legado tiene campos vacios
+      o inconsistentes que requieren reglas de completado y marcado.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Must
+    responsable: Datos
+    requisitos: [RF-007]
+    puntos_dolor: [PD-09]
+  - id: BR-008
+    capacidad: CAP-03
+    titulo: Extraccion de datos embebidos en texto libre
+    tipo: desarrollo
+    descripcion: >-
+      El campo de observaciones del legado guarda telefonos, direcciones y notas
+      mezcladas; se extraen patrones reconocibles y se conserva el texto original.
+    esfuerzo: M
+    riesgo: medio
+    prioridad: Should
+    responsable: Datos
+    requisitos: [RF-008]
+    puntos_dolor: [PD-09]
+  - id: BR-009
+    capacidad: CAP-04
+    titulo: Parametros de producto configurables por el banco
+    tipo: configuracion
+    descripcion: >-
+      Tasas, limites y comisiones pasan de constantes del codigo legado a
+      parametros administrables con vigencia y versionado.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Must
+    responsable: Producto
+    requisitos: [RF-009]
+    puntos_dolor: [PD-11]
+  - id: BR-010
+    capacidad: CAP-04
+    titulo: Estados legados desconocidos pasan a revision manual
+    tipo: proceso_manual
+    descripcion: >-
+      Cuentas con estado X del legado no se cargan como activas; quedan en cola de
+      revision con decision registrada antes del corte.
+    esfuerzo: S
+    riesgo: medio
+    prioridad: Must
+    responsable: Operaciones
+    requisitos: [RF-010]
+    puntos_dolor: []
+  - id: BR-011
+    capacidad: CAP-05
+    titulo: Regimen de descubierto y comision de mantenimiento
+    tipo: configuracion
+    descripcion: >-
+      El destino modela limite de descubierto y comision mensual como condiciones
+      de la cuenta; se cargan desde parametros del legado.
+    esfuerzo: M
+    riesgo: medio
+    prioridad: Must
+    responsable: Producto y Sistemas
+    requisitos: [RF-011]
+    puntos_dolor: [PD-11]
+  - id: BR-012
+    capacidad: CAP-05
+    titulo: Impuesto sobre debitos y creditos automatizado
+    tipo: desarrollo
+    descripcion: >-
+      El calculo del impuesto sobre movimientos de cuenta corriente se integra al
+      motor de eventos; en el legado corre por batch nocturno.
+    esfuerzo: M
+    riesgo: alto
+    prioridad: Must
+    responsable: Sistemas y Contabilidad
+    requisitos: [RF-012]
+    puntos_dolor: [PD-07]
+  - id: BR-013
+    capacidad: CAP-06
+    titulo: Renovacion automatica de plazos fijos configurable
+    tipo: configuracion
+    descripcion: >-
+      La renovacion automatica se define por plazo constitutivo, con opcion de
+      cancelacion o renovacion total o parcial de intereses.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Should
+    responsable: Producto
+    requisitos: [RF-013]
+    puntos_dolor: []
+  - id: BR-014
+    capacidad: CAP-06
+    titulo: Cancelacion anticipada con prorrateo de intereses
+    tipo: desarrollo
+    descripcion: >-
+      El core nuevo calcula la cancelacion anticipada con tasa de precancelacion
+      provisional; el legado lo hace manualmente en ventanilla.
+    esfuerzo: M
+    riesgo: medio
+    prioridad: Should
+    responsable: Producto y Sistemas
+    requisitos: [RF-014]
+    puntos_dolor: [PD-02]
+  - id: BR-015
+    capacidad: CAP-07
+    titulo: Cronogramas de cuotas con seguros asociados
+    tipo: desarrollo
+    descripcion: >-
+      El destino modela capital, interes y seguros por cuota; se valida que el
+      saldo de capital sea igual a la suma de capitales pendientes.
+    esfuerzo: L
+    riesgo: alto
+    prioridad: Must
+    responsable: Sistemas y Producto
+    requisitos: [RF-015]
+    puntos_dolor: [PD-07]
+  - id: BR-016
+    capacidad: CAP-07
+    titulo: Mora y refinanciaciones
+    tipo: desarrollo
+    descripcion: >-
+      El destino calcula mora diaria y permite refinanciar generando un nuevo
+      cronograma; el legado lo hace con planillas manuales.
+    esfuerzo: L
+    riesgo: alto
+    prioridad: Must
+    responsable: Producto y Cobranzas
+    requisitos: [RF-016]
+    puntos_dolor: [PD-03]
+  - id: BR-017
+    capacidad: CAP-07
+    titulo: Prestamos hipotecarios permanecen fuera del alcance
+    tipo: descontinuar
+    descripcion: >-
+      Los prestamos hipotecarios no se migran; siguen gestionandose en su sistema
+      especializado, integrado por archivo con el core nuevo.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Must
+    responsable: Producto
+    requisitos: [RF-017]
+    puntos_dolor: [PD-10]
+  - id: BR-018
+    capacidad: CAP-08
+    titulo: Emision y bloqueo de tarjetas de debito en linea
+    tipo: desarrollo
+    descripcion: >-
+      La emision, reposicion y bloqueo dejan de depender del lote nocturno y se
+      integran al core nuevo con el procesador de tarjetas.
+    esfuerzo: M
+    riesgo: medio
+    prioridad: Must
+    responsable: Sistemas y Canales
+    requisitos: [RF-018]
+    puntos_dolor: [PD-04]
+  - id: BR-019
+    capacidad: CAP-08
+    titulo: Modelo de tarjeta de debito asociada a cuenta
+    tipo: configuracion
+    descripcion: >-
+      La tarjeta se migra como producto asociado a la cuenta con estado y datos de
+      emision; el plastico se reemite solo si esta vencido o bloqueado.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Must
+    responsable: Producto
+    requisitos: [RF-019]
+    puntos_dolor: []
+  - id: BR-020
+    capacidad: CAP-09
+    titulo: Debito automatico por mandatos migrados
+    tipo: desarrollo
+    descripcion: >-
+      Los mandatos activos se migran con servicio, cuenta, tope y frecuencia; el
+      core nuevo ejecuta debitos con reintentos y trazabilidad.
+    esfuerzo: L
+    riesgo: alto
+    prioridad: Must
+    responsable: Sistemas y Operaciones
+    requisitos: [RF-020]
+    puntos_dolor: [PD-03]
+  - id: BR-021
+    capacidad: CAP-09
+    titulo: Transferencias inmediatas por API
+    tipo: desarrollo
+    descripcion: >-
+      Las transferencias entre cuentas propias y a terceros se exponen como
+      servicios del core nuevo, con control de limites y reversion.
+    esfuerzo: M
+    riesgo: alto
+    prioridad: Must
+    responsable: Sistemas
+    requisitos: [RF-021]
+    puntos_dolor: [PD-02, PD-10]
+  - id: BR-022
+    capacidad: CAP-10
+    titulo: Plan de cuentas y mapeo producto cuenta contable
+    tipo: configuracion
+    descripcion: >-
+      Se migra el plan de cuentas legado y se define la tabla de mapeo de cada
+      producto a su cuenta contable en el nuevo mayor.
+    esfuerzo: M
+    riesgo: alto
+    prioridad: Must
+    responsable: Contabilidad
+    requisitos: [RF-022]
+    puntos_dolor: [PD-08]
+  - id: BR-023
+    capacidad: CAP-10
+    titulo: Asientos automaticos por evento de negocio
+    tipo: desarrollo
+    descripcion: >-
+      Apertura, deposito, extraccion, cuota, comision e interes generan asientos en
+      linea con doble partida y referencia al documento de origen.
+    esfuerzo: L
+    riesgo: alto
+    prioridad: Must
+    responsable: Sistemas y Contabilidad
+    requisitos: [RF-023]
+    puntos_dolor: [PD-07, PD-08]
+  - id: BR-024
+    capacidad: CAP-10
+    titulo: Conciliacion contable automatizada del pipeline
+    tipo: desarrollo
+    descripcion: >-
+      El pipeline compara saldos por producto contra el mayor y exige cuadre
+      directo o ajuste de migracion aprobado y evidenciado.
+    esfuerzo: M
+    riesgo: alto
+    prioridad: Must
+    responsable: Contabilidad y Datos
+    requisitos: [RF-024]
+    puntos_dolor: [PD-07, PD-08]
+  - id: BR-025
+    capacidad: CAP-11
+    titulo: Motor de intereses diario
+    tipo: desarrollo
+    descripcion: >-
+      Los intereses de cajas de ahorro se causan diariamente y se capitalizan
+      segun condicion de producto, con traza de calculo por cuenta.
+    esfuerzo: L
+    riesgo: alto
+    prioridad: Must
+    responsable: Producto y Sistemas
+    requisitos: [RF-025]
+    puntos_dolor: [PD-02]
+  - id: BR-026
+    capacidad: CAP-11
+    titulo: Comisiones configurables y reversibles
+    tipo: configuracion
+    descripcion: >-
+      Las comisiones se definen por parametro con vigencia, y su reversion requiere
+      doble autorizacion con pista de auditoria.
+    esfuerzo: M
+    riesgo: medio
+    prioridad: Must
+    responsable: Producto y Operaciones
+    requisitos: [RF-026]
+    puntos_dolor: [PD-11]
+  - id: BR-027
+    capacidad: CAP-12
+    titulo: Reportes regulatorios generados desde el modelo destino
+    tipo: desarrollo
+    descripcion: >-
+      La informacion de saldos, depositos y prestamos se extrae del modelo
+      relacional con controles de calidad previos a la presentacion.
+    esfuerzo: L
+    riesgo: alto
+    prioridad: Must
+    responsable: Cumplimiento y Datos
+    requisitos: [RF-027]
+    puntos_dolor: [PD-10]
+  - id: BR-028
+    capacidad: CAP-12
+    titulo: Retencion y trazabilidad de informacion migrada
+    tipo: desarrollo
+    descripcion: >-
+      La informacion migrada conserva identificadores de origen y fecha de carga
+      para responder requerimientos de informacion y auditoria.
+    esfuerzo: M
+    riesgo: medio
+    prioridad: Must
+    responsable: Datos y Cumplimiento
+    requisitos: [RF-028]
+    puntos_dolor: [PD-12]
+  - id: BR-029
+    capacidad: CAP-13
+    titulo: Extractos y consultas en linea
+    tipo: desarrollo
+    descripcion: >-
+      Extractos mensuales y consultas de movimientos se sirven desde el core nuevo
+      con historial migrado de 12 meses.
+    esfuerzo: M
+    riesgo: medio
+    prioridad: Should
+    responsable: Canales
+    requisitos: [RF-029]
+    puntos_dolor: [PD-02]
+  - id: BR-030
+    capacidad: CAP-13
+    titulo: Historial de movimientos de 12 meses
+    tipo: cubierta
+    descripcion: >-
+      El core nuevo soporta la carga historica definida en la ventana de migracion
+      sin desarrollos adicionales, con indices por cuenta y fecha.
+    esfuerzo: L
+    riesgo: medio
+    prioridad: Must
+    responsable: Datos
+    requisitos: [RF-030]
+    puntos_dolor: []
+  - id: BR-031
+    capacidad: CAP-14
+    titulo: Reintentos programables de debito automatico
+    tipo: configuracion
+    descripcion: >-
+      El core nuevo permite reintentar debitos fallidos hasta el dia 10 del mes
+      segun parametro de cobranza, reduciendo mora tecnica.
+    esfuerzo: S
+    riesgo: medio
+    prioridad: Should
+    responsable: Cobranzas
+    requisitos: [RF-031]
+    puntos_dolor: [PD-03]
+  - id: BR-032
+    capacidad: CAP-14
+    titulo: Avisos de mora multicanal
+    tipo: desarrollo
+    descripcion: >-
+      Notificaciones por correo y celular desde el motor de eventos; el legado las
+      genera por lote postal.
+    esfuerzo: M
+    riesgo: bajo
+    prioridad: Could
+    responsable: Cobranzas y Canales
+    requisitos: [RF-032]
+    puntos_dolor: [PD-06]
+  - id: BR-033
+    capacidad: CAP-15
+    titulo: Pista de auditoria por operacion
+    tipo: desarrollo
+    descripcion: >-
+      Toda operacion sobre clientes, cuentas y productos registra usuario, canal,
+      fecha y valores anteriores y posteriores.
+    esfuerzo: M
+    riesgo: alto
+    prioridad: Must
+    responsable: Sistemas y Auditoria
+    requisitos: [RF-033]
+    puntos_dolor: [PD-12]
+  - id: BR-034
+    capacidad: CAP-15
+    titulo: Segregacion de funciones y perfiles
+    tipo: configuracion
+    descripcion: >-
+      Los perfiles se definen por funcion con matriz de autorizaciones; la
+      reversion de comisiones e intereses exige doble control.
+    esfuerzo: S
+    riesgo: alto
+    prioridad: Must
+    responsable: Seguridad
+    requisitos: [RF-034]
+    puntos_dolor: [PD-12]
+  - id: BR-035
+    capacidad: TRV
+    titulo: Conciliacion de saldos de cuentas en el pipeline
+    tipo: desarrollo
+    descripcion: >-
+      Para cada cuenta se valida saldo final igual a saldo de apertura mas
+      movimientos; los descuadres se corrigen con regla o pasan a manual.
+    esfuerzo: M
+    riesgo: alto
+    prioridad: Must
+    responsable: Datos y Contabilidad
+    requisitos: [RF-036]
+    puntos_dolor: [PD-07]
+  - id: BR-036
+    capacidad: TRV
+    titulo: Bitacora de ejecucion y rechazos con motivo
+    tipo: desarrollo
+    descripcion: >-
+      Cada ejecucion registra filas leidas, transformadas, rechazadas y cargadas
+      con motivo de rechazo y regla aplicada.
+    esfuerzo: S
+    riesgo: medio
+    prioridad: Must
+    responsable: Datos
+    requisitos: [RF-037]
+    puntos_dolor: [PD-08]
+  - id: BR-037
+    capacidad: TRV
+    titulo: Interfaces por archivo con sistemas satelites
+    tipo: proceso_manual
+    descripcion: >-
+      Mientras los satelites (tarjetas de credito, hipotecarios, inversiones) no
+      se integren por servicio, un proceso operativo intercambia archivos
+      controlados con conteos y sumas.
+    esfuerzo: M
+    riesgo: medio
+    prioridad: Should
+    responsable: Operaciones y Sistemas
+    requisitos: [RF-038]
+    puntos_dolor: [PD-10]
+  - id: BR-038
+    capacidad: TRV
+    titulo: Productos TR, PH y PX sin equivalente en el destino
+    tipo: descontinuar
+    descripcion: >-
+      Aparecen en la extraccion productos de rubros excluidos; se rechazan con
+      motivo fuera_de_alcance y se informan a los satelites correspondientes.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Must
+    responsable: Producto
+    requisitos: [RF-039]
+    puntos_dolor: []
+  - id: BR-039
+    capacidad: TRV
+    titulo: Tipos de firma y condiciones de cuenta simplificadas
+    tipo: configuracion
+    descripcion: >-
+      Los tipos de firma legados se mapean a condiciones del destino; las
+      combinaciones sin equivalente pasan a revision manual.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Could
+    responsable: Operaciones
+    requisitos: [RF-040]
+    puntos_dolor: []
+  - id: BR-040
+    capacidad: TRV
+    titulo: Descontinuar libretas fisicas y sellos manuales
+    tipo: descontinuar
+    descripcion: >-
+      Se reemplazan por extractos digitales; se comunica a clientes y se conserva
+      la ultima impresion historica como respaldo.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Won't
+    responsable: Canales
+    requisitos: []
+    puntos_dolor: [PD-11]
+  - id: BR-041
+    capacidad: TRV
+    titulo: Depositos y extracciones en caja
+    tipo: cubierta
+    descripcion: >-
+      El core nuevo cubre la operatoria de caja sin desarrollo adicional; solo
+      requiere parametrizacion de limites y capacitacion.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Must
+    responsable: Operaciones
+    requisitos: [RF-041]
+    puntos_dolor: []
+  - id: BR-042
+    capacidad: TRV
+    titulo: Enmascaramiento de datos en entornos de prueba
+    tipo: desarrollo
+    descripcion: >-
+      Documento, nombre, telefono, correo y direccion se seudoanonimizan de forma
+      determinista para pruebas y muestras publicadas.
+    esfuerzo: S
+    riesgo: alto
+    prioridad: Must
+    responsable: Seguridad y Datos
+    requisitos: [RNF-003]
+    puntos_dolor: [PD-12]
+  - id: BR-043
+    capacidad: TRV
+    titulo: Consulta de saldos y movimientos por API
+    tipo: cubierta
+    descripcion: >-
+      Los servicios de consulta del core nuevo cubren la necesidad de canales sin
+      desarrollo adicional; resta configurar limites por canal.
+    esfuerzo: S
+    riesgo: bajo
+    prioridad: Must
+    responsable: Canales
+    requisitos: [RF-042]
+    puntos_dolor: [PD-02]
+  - id: BR-044
+    capacidad: TRV
+    titulo: Conciliacion manual de archivos satelite durante la transicion
+    tipo: proceso_manual
+    descripcion: >-
+      Durante los primeros 60 dias posteriores al corte, Operaciones concilia
+      manualmente los archivos de satelites con conteos y sumas de control.
+    esfuerzo: S
+    riesgo: medio
+    prioridad: Should
+    responsable: Operaciones
+    requisitos: [RF-038]
+    puntos_dolor: [PD-07]
