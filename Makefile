@@ -61,9 +61,8 @@ sitio: entorno
 	$(PY) -m mkdocs build --site-dir site
 
 reducido: ESCALA=piloto
-reducido: export ESCALA
 reducido: entorno
-	$(MAKE) --no-print-directory datos migracion conciliacion perfilado pruebas
+	$(MAKE) --no-print-directory datos migracion conciliacion perfilado pruebas ESCALA=$(ESCALA)
 
 limpiar:
 	rm -rf datos site .pytest_cache .ruff_cache
